@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Capacity to Start — The Capacity Method</title>
+  <meta name="description" content="A half-day workshop for people starting a business. Train your capacity to act when pressure hits — without relying on willpower or confidence.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --dark: #1a1a2e;
+      --deep: #16213e;
+      --mid: #2d2d44;
+      --accent: #c8a96e;
+      --accent-light: #e8c98e;
+      --text: #f0ede8;
+      --text-muted: #b0a898;
+      --white: #ffffff;
+      --soft-bg: #f7f4f0;
+      --soft-text: #2a2520;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      color: var(--text);
+      background: var(--dark);
+      line-height: 1.7;
+    }
+
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0f0f1e 0%, #1a1a2e 50%, #0d1b2a 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: -20%;
+      width: 80%;
+      height: 80%;
+      background: radial-gradient(ellipse, rgba(200,169,110,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 400;
+      line-height: 1.2;
+      max-width: 820px;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent-light);
+    }
+
+    .hero-sub {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 20px auto 0;
+      font-style: italic;
+    }
+
+    .hero-divider {
+      width: 50px;
+      height: 1px;
+      background: var(--accent);
+      margin: 36px auto;
+      opacity: 0.6;
+    }
+
+    .hero-details {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      max-width: 640px;
+      color: var(--text);
+      line-height: 1.8;
+      margin-top: 24px;
+    }
+
+    .hero-details strong {
+      color: var(--accent-light);
+      font-weight: 400;
+    }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #1a1a00;
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 18px 44px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-note {
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    section {
+      padding: 90px 24px;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1.25;
+      margin-bottom: 28px;
+      color: var(--white);
+    }
+
+    p {
+      font-size: 1.05rem;
+      margin-bottom: 18px;
+      color: var(--text);
+    }
+
+    p strong {
+      color: var(--accent-light);
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .story-section {
+      background: var(--deep);
+    }
+
+    .what-happens {
+      background: var(--dark);
+    }
+
+    .shifts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin: 48px 0;
+    }
+
+    @media (max-width: 720px) {
+      .shifts-grid { grid-template-columns: 1fr; }
+    }
+
+    .shift-card {
+      background: var(--mid);
+      padding: 32px 24px;
+      border-top: 3px solid var(--accent);
+    }
+
+    .shift-card .num {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .shift-card h3 {
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+
+    .shift-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .leave-with {
+      background: var(--deep);
+    }
+
+    .leave-list {
+      list-style: none;
+      margin: 32px 0;
+    }
+
+    .leave-list li {
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      font-size: 1.05rem;
+      color: var(--text);
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .leave-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .details-section {
+      background: var(--mid);
+      text-align: center;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 48px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 720px) {
+      .details-grid { grid-template-columns: 1fr; }
+    }
+
+    .detail-card {
+      background: var(--deep);
+      padding: 36px 24px;
+      text-align: center;
+    }
+
+    .detail-card .label {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .detail-card .value {
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .detail-card .note {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .book-section {
+      background: linear-gradient(160deg, #0f0f1e 0%, #1a1a2e 100%);
+      text-align: center;
+    }
+
+    .book-section h2 {
+      max-width: 600px;
+      margin: 0 auto 24px;
+    }
+
+    .book-section .sub {
+      color: var(--text-muted);
+      font-style: italic;
+      max-width: 540px;
+      margin: 0 auto 48px;
+      font-size: 1.05rem;
+    }
+
+    footer {
+      background: #0a0a14;
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    footer p {
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      margin: 0;
+    }
+
+    footer .brand {
+      font-size: 14px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-label">The Capacity Method</span>
+
+  <h1>
+    Capacity to Start
+  </h1>
+
+  <p class="hero-sub">A half-day workshop for people starting a business</p>
+
+  <div class="hero-divider"></div>
+
+  <p class="hero-details">
+    You know what you need to do. Or at least you think you do.<br>
+    But something keeps stopping you.<br><br>
+    <strong>It isn't fear. It isn't ability. It's capacity.</strong>
+  </p>
+
+  <div class="hero-cta">
+    <a href="#book" class="btn-primary">Book Your Place</a>
+    <span class="btn-note">£47 · Half a day · Max 12 people · First session March 2026</span>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story-section">
+  <div class="container">
+    <span class="section-label">Why This Works</span>
+    <h2>I didn't find this in a textbook.</h2>
+
+    <p>
+      I spent 15 years in HR systems before I burnt out — properly. My Nan died. My Mum died. 
+      My marriage collapsed. I was left with a mortgage to pay on my own. I didn't want to cope. 
+      I just wanted it to stop.
+    </p>
+
+    <p>
+      <strong>My coping mechanism? Wine. Lots of it.</strong> I'm not proud of it, but I'm not 
+      ashamed either. It's what I had at the time. No judgement from me — I've been there.
+    </p>
+
+    <p>
+      What eventually shifted things wasn't therapy or mindset work. It was my body. 
+      Strength training. Martial arts. Breathwork. I was genuinely surprised — 
+      <strong>I came for the physical, and something much deeper changed.</strong>
+    </p>
+
+    <p>
+      I retrained as a personal trainer and started working with clients. I saw serious shifts — 
+      not just fitness. Lives changing. I went deeper into fascia training, breathwork, and positive 
+      intelligence to understand what was actually happening at a system level.
+    </p>
+
+    <p>
+      Then I started attending business programmes. And I saw the exact same pattern I'd seen in my 
+      own breakdown — in entrepreneurs. People with good ideas, willing buyers <em>in the room</em>, 
+      and they still couldn't act. Everyone called it confidence. <strong>I knew it wasn't.</strong>
+    </p>
+
+    <p>
+      That's when I built The Capacity Method. Not as a coaching product. As a missing piece — 
+      designed to work alongside the business support you're already getting.
+    </p>
+  </div>
+</section>
+
+<!-- WHAT HAPPENS -->
+<section class="what-happens">
+  <div class="container">
+    <span class="section-label">What Actually Happens</span>
+    <h2>This isn't a talk. It's an experience.</h2>
+
+    <p>
+      Capacity to Start is a half-day workshop where you actually <em>feel</em> the difference 
+      between being stuck in protection mode and operating from capacity. No theory. 
+      No sitting still for three hours.
+    </p>
+
+    <p>Here's what we do:</p>
+
+    <div class="shifts-grid">
+      <div class="shift-card">
+        <span class="num">Shift 01</span>
+        <h3>Recognise</h3>
+        <p>
+          Spot when your system flips into protection mode — physically and mentally. 
+          You can't change what you can't see. This is where awareness starts.
+        </p>
+      </div>
+
+      <div class="shift-card">
+        <span class="num">Shift 02</span>
+        <h3>Identify</h3>
+        <p>
+          Name your sabotage patterns. Most people have two archetypes that show up under pressure. 
+          We'll find yours — not so you can fix yourself, but so you can work with them.
+        </p>
+      </div>
+
+      <div class="shift-card">
+        <span class="num">Shift 03</span>
+        <h3>Choose</h3>
+        <p>
+          Learn to interrupt the pattern in real time. Not by forcing yourself, but by understanding 
+          the signal. This is where capacity replaces willpower.
+        </p>
+      </div>
+    </div>
+
+    <p>
+      We use breathwork and body-based exercises — not generic ones, but specific to the actions 
+      you're avoiding in your business. Starting a conversation. Making an offer. Showing your work. 
+      Whatever yours is.
+    </p>
+
+    <p>
+      <strong>There's usually a moment in the room where something shifts.</strong> You realise 
+      it's simpler than you thought. You can choose how you want to respond — rather than just react.
+    </p>
+  </div>
+</section>
+
+<!-- LEAVE WITH -->
+<section class="leave-with">
+  <div class="container">
+    <span class="section-label">You Leave With</span>
+    <h2>Something you can actually use.</h2>
+
+    <ul class="leave-list">
+      <li>Your specific sabotage patterns — named and recognised</li>
+      <li>A personal practice that works for <em>you</em>, not generic advice</li>
+      <li>The ability to spot protection mode activating — before it derails you</li>
+      <li>A way to interrupt the pattern in the moment — not hours later</li>
+      <li>The realisation that capacity is trainable, not fixed</li>
+    </ul>
+
+    <p style="margin-top: 32px;">
+      This isn't motivation. It's not mindset. It's nervous system training — 
+      <strong>and it works when it matters, not just when you feel ready.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section class="details-section">
+  <div class="container">
+    <span class="section-label">Workshop Details</span>
+    <h2>Half a day. Small group. Real shifts.</h2>
+
+    <div class="details-grid">
+      <div class="detail-card">
+        <span class="label">Duration</span>
+        <div class="value">Half day</div>
+        <div class="note">Morning or afternoon session</div>
+      </div>
+
+      <div class="detail-card">
+        <span class="label">Group Size</span>
+        <div class="value">Max 12</div>
+        <div class="note">Small enough to be personal</div>
+      </div>
+
+      <div class="detail-card">
+        <span class="label">Investment</span>
+        <div class="value">£47</div>
+        <div class="note">Per person</div>
+      </div>
+
+      <div class="detail-card">
+        <span class="label">Format</span>
+        <div class="value">Online or In-Person</div>
+        <div class="note">You choose when booking</div>
+      </div>
+
+      <div class="detail-card">
+        <span class="label">First Session</span>
+        <div class="value">March 2026</div>
+        <div class="note">More dates added based on demand</div>
+      </div>
+
+      <div class="detail-card">
+        <span class="label">Who It's For</span>
+        <div class="value">Pre-start</div>
+        <div class="note">People about to start a business</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK -->
+<section class="book-section" id="book">
+  <div class="container">
+    <span class="section-label">Book Your Place</span>
+    <h2>One thing to do right now.</h2>
+    <p class="sub">
+      Places are limited to 12 people per session. Book now to secure your spot 
+      in the first cohort. Promo codes available on request.
+    </p>
+
+    <div class="hero-cta">
+      <a href="https://www.eventbrite.com/e/YOUR-EVENT-ID" class="btn-primary">Book Now — £47</a>
+      <span class="btn-note">
+        Booking via Eventbrite · Full refund if you change your mind before the session
+      </span>
+    </div>
+
+    <p style="margin-top: 48px; font-size: 0.95rem; color: var(--text-muted); font-style: italic;">
+      Got a promo code? You can apply it during checkout on Eventbrite.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="brand">The Capacity Method</p>
+  <p>
+    Sinead &nbsp;·&nbsp; 
+    <a href="mailto:sinead.murphy@me.com">sinead.murphy@me.com</a> &nbsp;·&nbsp; 
+    <a href="/">Business Educators</a>
+  </p>
+</footer>
+
+</body>
+</html>
