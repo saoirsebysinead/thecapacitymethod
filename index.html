@@ -627,8 +627,8 @@
   </p>
 
   <div class="hero-cta">
-    <a href="https://forms.gle/69nkgTkS5QJVvVkk7" target="_blank" class="btn-primary">Join the Pilot Waitlist</a>
-    <span class="btn-note">Pilot workshop · Under £100 · Limited places</span>
+    <a href="#waitlist" class="btn-primary" onclick="document.querySelector('#waitlist').scrollIntoView({behavior:'smooth'}); return false;">Express Interest in the Pilot</a>
+    <span class="btn-note">From £300 per workshop · tailored to your programme</span>
   </div>
 </section>
 
@@ -639,14 +639,14 @@
     <span class="section-label">The Gap Nobody Talks About</span>
     <h2>You've seen this.</h2>
     <p class="pattern-insight">
-      Someone with a great idea. Real interest in the room. Every reason to act.<br>
+      Someone with a great idea, service or product. Every reason to act.<br>
       And they still don't.
     </p>
 
     <div class="pattern-body">
       <p>
         They call it lack of confidence. But watch what actually happens: they freeze mid-sentence. They
-        overexplain. They apologise before they've said anything. They leave the room without pitching —
+        overexplain. They apologise before they've said anything. They leave the room or programme without pitching —
         and only later realise someone would have bought.
       </p>
       <p>
@@ -655,7 +655,8 @@
         Visibility. Judgement. Uncertainty. Failure. The body responds before logic gets a chance.
       </p>
       <p>
-        This is the gap between knowing and doing. And most business programmes weren't built to close it.
+        This is the gap between knowing and doing - fear and follow-though. 
+        And most business programmes weren't built to close it.
       </p>
     </div>
   </div>
@@ -671,22 +672,24 @@
         <h2>I didn't find this in a textbook.</h2>
         <p>
           I spent 15 years in HR systems before I burnt out — properly. Grief, a marriage ending, a mortgage
-          to carry alone. I didn't want to cope. I just wanted it to stop.
+          to carry alone - while my career crumbled. Overwhelm hit first. Which I numbed with wine.
+          Then I didn't want to cope. I just wanted it to stop. And came very close to ending it all.
         </p>
         <p>
           What eventually shifted things wasn't therapy or mindset work. It was my body.
-          Strength training. Martial arts. Breathwork. I was genuinely surprised —
+          I started with Strength training. Then Martial arts. Then Breathwork. I was genuinely surprised —
           <strong>I came for the physical, and something much deeper changed.</strong>
         </p>
         <p>
-          I retrained, worked with clients, and started to see serious shifts. Not just fitness.
-          Lives changing. I went deeper into fascia training, breathwork, and positive intelligence
-          to understand what was actually happening at a system level.
+          It was then that I realised <strong>the pattern;</strong> all of the modalities that actually helped me were body-based.
+          So I retrained as personal trainer. Worked with clients - using a fusion of modalities - and started to see serious shifts. Not just fitness.
+          Lives changing. Clients of 65 climbing mountains - literally. I went deeper into fascia training, breathwork, vagus nerve regulation and positive intelligence
+          to understand what was actually happening at a whole system level.
         </p>
         <p>
           Then I started attending business programmes. And I saw the exact same pattern I'd seen
           in my own breakdown — in entrepreneurs. People with good ideas, willing buyers
-          <em>in the room</em>, and they still couldn't act. Everyone called it confidence.
+          <em>in the room</em>, and they still couldn't act. Everyone called it lack of confidence.
           <strong>I knew it wasn't.</strong>
         </p>
         <p>
@@ -780,12 +783,12 @@
     </ul>
 
     <p>
-      <strong>The pilot workshop is under £100 per participant</strong> and is designed to integrate
+      <strong>The pilot workshop is priced from £300 per workshop</strong> and is designed to integrate
       naturally into existing programmes — as a standalone session or an embedded component.
     </p>
 
     <div style="margin-top: 36px;">
-      <a href="https://forms.gle/69nkgTkS5QJVvVkk7" target="_blank" class="btn-primary">Express Interest in the Pilot</a>
+      <a href="#waitlist" class="btn-primary" onclick="document.querySelector('#waitlist').scrollIntoView({behavior:'smooth'}); return false;">Express Interest in the Pilot</a>
     </div>
   </div>
 </section>
@@ -836,8 +839,8 @@
     </div>
 
     <p class="workshop-note">
-      Not sure which fits? The waitlist form below lets you tell me where your participants are —
-      and we'll find the right fit together.
+      Not sure which fits? The form below lets you tell Sinead where your participants are —
+      and you can find the right fit together.
     </p>
   </div>
 </section>
@@ -873,18 +876,29 @@
 <!-- ═══════════════════════════════════════ WAITLIST ═══ -->
 <section class="waitlist-section" id="waitlist">
   <div class="container">
-    <span class="section-label">Pilot Waitlist</span>
-    <h2>Be part of the first cohort.</h2>
+    <span class="section-label">Express Interest</span>
+    <h2>Let's talk about your participants.</h2>
     <p class="sub">
-      The pilot workshop is under £100. Places are limited and being offered to programme providers
-      and educators first — so your participants benefit early.
+      Fill in the form and Sinead will be in touch directly. From £300 per workshop,
+      tailored to your programme.
     </p>
 
-    <div class="waitlist-form">
-      <a href="https://forms.gle/69nkgTkS5QJVvVkk7" target="_blank" class="btn-primary" style="width:100%; text-align:center;">Join the Waitlist</a>
-    </div>
+    <form class="waitlist-form" action="https://formspree.io/f/mzdagokv" method="POST">
+      <input type="text" name="name" placeholder="Your name" required />
+      <input type="email" name="email" placeholder="Your email address" required />
+      <input type="text" name="organisation" placeholder="Organisation or programme name (optional)" />
+      <select name="workshop">
+        <option value="" disabled selected>Which workshop fits your participants?</option>
+        <option value="Capacity to Start">Capacity to Start — about to begin</option>
+        <option value="Capacity to Act">Capacity to Act — already running something</option>
+        <option value="Capacity to Lead">Capacity to Lead — building a team</option>
+        <option value="Not sure">Not sure — happy to talk it through</option>
+      </select>
+      <textarea name="comments" placeholder="Anything you'd like to add? (optional)" rows="4" style="width:100%; padding:16px 20px; background:rgba(255,255,255,0.06); border:1px solid rgba(200,169,110,0.3); color:#f0ede8; font-family:'Georgia',serif; font-size:1rem; outline:none; resize:vertical;"></textarea>
+      <button type="submit" class="btn-primary" style="width:100%; text-align:center; cursor:pointer; border:none;">Express Interest</button>
+    </form>
 
-    <p class="waitlist-note">No spam. No pressure. Just a note when the pilot opens.</p>
+    <p class="waitlist-note">No spam. No pressure. Sinead will reply personally.</p>
   </div>
 </section>
 
