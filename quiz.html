@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's Your Capacity Pattern? — Capacity to Start</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8A96E;
+    --gold-light: #E8C98E;
+    --gold-pale: #F5EDD8;
+    --navy: #1A1A2E;
+    --navy-mid: #252540;
+    --navy-light: #2D2D50;
+    --white: #FDFAF5;
+    --muted: #9A9080;
+    --warm-grey: #F0EDE8;
+    --text: #2A2520;
+
+    --braced: #C0392B;
+    --braced-light: #F9EAE8;
+    --disappeared: #2471A3;
+    --disappeared-light: #E8F4F8;
+    --cycling: #1E8449;
+    --cycling-light: #E8F5EC;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  .screen {
+    position: relative;
+    z-index: 1;
+    display: none;
+    min-height: 100vh;
+    animation: fadeIn 0.6s ease forwards;
+  }
+  .screen.active { display: flex; flex-direction: column; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── INTRO SCREEN */
+  #intro {
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    text-align: center;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,169,110,0.12) 0%, transparent 70%);
+  }
+
+  .eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .intro-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 7vw, 72px);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .intro-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .intro-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(253,250,245,0.65);
+    max-width: 480px;
+    line-height: 1.7;
+    margin: 20px auto 40px;
+  }
+
+  .gold-line {
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 40px;
+  }
+
+  .time-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200,169,110,0.1);
+    border: 1px solid rgba(200,169,110,0.25);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 13px;
+    color: var(--gold-light);
+    margin-bottom: 40px;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 18px 48px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.15);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover::after { opacity: 1; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(200,169,110,0.3); }
+
+  .intro-footnote {
+    margin-top: 32px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ── QUIZ SCREEN */
+  #quiz {
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+  }
+
+  .quiz-header {
+    width: 100%;
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(200,169,110,0.1);
+  }
+
+  .quiz-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--gold-light);
+  }
+
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progress-bar {
+    width: 160px;
+    height: 2px;
+    background: rgba(200,169,110,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-label {
+    font-size: 12px;
+    color: var(--muted);
+    min-width: 40px;
+    text-align: right;
+  }
+
+  .quiz-body {
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 32px 40px;
+    flex: 1;
+  }
+
+  .question-block {
+    display: none;
+    animation: fadeIn 0.45s ease forwards;
+  }
+  .question-block.active { display: block; }
+
+  .q-number {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .q-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .q-sub {
+    font-size: 14px;
+    color: rgba(253,250,245,0.5);
+    margin-bottom: 40px;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .option {
+    background: rgba(253,250,245,0.04);
+    border: 1px solid rgba(200,169,110,0.15);
+    padding: 20px 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(253,250,245,0.85);
+    line-height: 1.5;
+    width: 100%;
+  }
+
+  .option::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+  }
+
+  .option:hover {
+    background: rgba(200,169,110,0.08);
+    border-color: rgba(200,169,110,0.35);
+    color: var(--white);
+  }
+
+  .option:hover::before { transform: scaleY(1); }
+
+  .option.selected {
+    background: rgba(200,169,110,0.12);
+    border-color: var(--gold);
+    color: var(--white);
+  }
+
+  .option.selected::before { transform: scaleY(1); }
+
+  .option-letter {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    background: rgba(200,169,110,0.15);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gold);
+    margin-right: 14px;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+
+  .quiz-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(200,169,110,0.1);
+  }
+
+  .btn-back {
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 8px 0;
+    transition: color 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .btn-back:hover { color: var(--gold-light); }
+  .btn-back:disabled { opacity: 0.3; cursor: default; }
+
+  .btn-next {
+    background: none;
+    border: 1px solid rgba(200,169,110,0.4);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    cursor: pointer;
+    padding: 14px 36px;
+    transition: all 0.2s ease;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .btn-next.enabled {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .btn-next.enabled:hover {
+    background: rgba(200,169,110,0.1);
+    border-color: var(--gold);
+  }
+
+  /* ── EMAIL GATE */
+  #email-gate {
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    text-align: center;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(200,169,110,0.08) 0%, transparent 70%);
+  }
+
+  .gate-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 5vw, 46px);
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .gate-sub {
+    font-size: 15px;
+    color: rgba(253,250,245,0.55);
+    max-width: 420px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  .email-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .form-input {
+    flex: 1;
+    background: rgba(253,250,245,0.06);
+    border: 1px solid rgba(200,169,110,0.2);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    padding: 16px 20px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-input:focus { border-color: rgba(200,169,110,0.5); }
+  .form-input::placeholder { color: rgba(253,250,245,0.3); }
+
+  .privacy-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* ── RESULT SCREENS */
+  .result-screen {
+    display: none;
+    flex-direction: column;
+    min-height: 100vh;
+    animation: fadeIn 0.7s ease forwards;
+  }
+
+  .result-screen.active { display: flex; }
+
+  .result-hero {
+    padding: 80px 24px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    opacity: 0.08;
+  }
+
+  .braced-hero { background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(192,57,43,0.25) 0%, transparent 70%); }
+  .disappeared-hero { background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(36,113,163,0.25) 0%, transparent 70%); }
+  .cycling-hero { background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(30,132,73,0.25) 0%, transparent 70%); }
+
+  .profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid;
+    border-radius: 100px;
+    padding: 8px 20px 8px 10px;
+    margin-bottom: 32px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .braced .profile-badge { border-color: rgba(192,57,43,0.5); color: #E8816A; }
+  .braced .badge-dot { background: var(--braced); }
+  .disappeared .profile-badge { border-color: rgba(36,113,163,0.5); color: #7EB8D8; }
+  .disappeared .badge-dot { background: var(--disappeared); }
+  .cycling .profile-badge { border-color: rgba(30,132,73,0.5); color: #72C98A; }
+  .cycling .badge-dot { background: var(--cycling); }
+
+  .result-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 8vw, 80px);
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .braced .result-name { color: #E8A098; }
+  .disappeared .result-name { color: #90C8E8; }
+  .cycling .result-name { color: #88D8A0; }
+
+  .result-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(253,250,245,0.55);
+    margin-bottom: 40px;
+  }
+
+  .result-body {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .result-section {
+    padding: 40px 0;
+    border-bottom: 1px solid rgba(200,169,110,0.1);
+  }
+
+  .result-section:last-of-type { border-bottom: none; }
+
+  .section-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .result-section p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(253,250,245,0.82);
+  }
+
+  .result-section p + p { margin-top: 16px; }
+
+  .mirror-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 3.5vw, 30px);
+    font-weight: 300;
+    line-height: 1.45;
+    color: var(--white);
+    font-style: italic;
+  }
+
+  .reframe-box {
+    background: rgba(200,169,110,0.07);
+    border-left: 3px solid var(--gold);
+    padding: 24px 28px;
+    margin: 24px 0;
+  }
+
+  .reframe-box p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 400;
+    color: var(--white) !important;
+    line-height: 1.5;
+  }
+
+  .cost-list {
+    list-style: none;
+    margin-top: 20px;
+  }
+
+  .cost-list li {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(253,250,245,0.06);
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(253,250,245,0.75);
+    line-height: 1.6;
+  }
+
+  .cost-list li::before {
+    content: '—';
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .cta-block {
+    background: rgba(200,169,110,0.06);
+    border: 1px solid rgba(200,169,110,0.2);
+    padding: 48px 40px;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .cta-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .cta-title em { font-style: italic; color: var(--gold-light); }
+
+  .cta-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(253,250,245,0.6);
+    line-height: 1.75;
+    max-width: 460px;
+    margin: 0 auto 36px;
+  }
+
+  .cta-details {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+
+  .cta-detail {
+    text-align: center;
+  }
+
+  .cta-detail-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--gold-light);
+    display: block;
+  }
+
+  .cta-detail-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .btn-cta {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 18px 52px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+  }
+
+  .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(200,169,110,0.3); }
+
+  .retake {
+    text-align: center;
+    padding: 32px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .retake a {
+    color: var(--gold);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .retake a:hover { color: var(--gold-light); }
+
+  @media (max-width: 600px) {
+    .form-row { flex-direction: column; }
+    .cta-block { padding: 36px 24px; }
+    .quiz-header { padding: 16px 20px; }
+    .quiz-body { padding: 40px 20px 32px; }
+    .progress-bar { width: 100px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- INTRO SCREEN -->
+<!-- ══════════════════════════════════════════ -->
+<div id="intro" class="screen active">
+  <p class="eyebrow">The Capacity Method</p>
+  <h1 class="intro-title">What's your<br><em>Capacity Pattern?</em></h1>
+  <div class="gold-line"></div>
+  <p class="intro-sub">Something keeps stopping you from starting. This isn't a mindset problem. It's a physiological pattern — and it has a name.</p>
+  <div class="time-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    3 minutes · 9 questions
+  </div>
+  <button class="btn-primary" onclick="showScreen('quiz'); renderQuestion(0)">Discover Your Pattern</button>
+  <p class="intro-footnote">No right or wrong answers. Go with your gut — your first response is your nervous system speaking.</p>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- QUIZ SCREEN -->
+<!-- ══════════════════════════════════════════ -->
+<div id="quiz" class="screen">
+  <div class="quiz-header">
+    <span class="quiz-logo">The Capacity Method</span>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <span class="progress-label" id="progress-label">1 / 9</span>
+    </div>
+  </div>
+  <div class="quiz-body" id="quiz-body"></div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- EMAIL GATE -->
+<!-- ══════════════════════════════════════════ -->
+<div id="email-gate" class="screen">
+  <p class="eyebrow">Almost there</p>
+  <h2 class="gate-title">Your pattern is ready.<br>Where shall we send it?</h2>
+  <p class="gate-sub">Your personalised Capacity Profile — including what's driving your pattern and the specific tools that shift it — will go straight to your inbox.</p>
+  <div class="email-form">
+    <div class="form-row">
+      <input class="form-input" type="text" id="first-name" placeholder="First name" />
+    </div>
+    <input class="form-input" type="email" id="email" placeholder="Email address" />
+    <button class="btn-primary" onclick="submitEmail()" style="width:100%">See My Capacity Pattern →</button>
+    <p class="privacy-note">No spam. No fluff. Unsubscribe any time.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- RESULT: THE BRACED FOUNDER -->
+<!-- ══════════════════════════════════════════ -->
+<div id="result-braced" class="result-screen braced">
+  <div class="result-hero braced-hero">
+    <div class="profile-badge"><span class="badge-dot"></span>Your Capacity Pattern</div>
+    <h1 class="result-name">The Braced<br>Founder</h1>
+    <p class="result-subtitle">Busy, pushing, never quite arriving.</p>
+  </div>
+  <div class="result-body">
+
+    <div class="result-section">
+      <p class="section-tag">The Mirror</p>
+      <p class="mirror-text">"You haven't stopped. You've been working on this for months — maybe longer. You prepare, you refine, you tweak. But somehow the thing never quite gets out into the world."</p>
+    </div>
+
+    <div class="result-section">
+      <p class="section-tag">What's Actually Happening</p>
+      <div class="reframe-box"><p>This isn't a motivation problem. It isn't perfectionism as a character flaw. It is your nervous system running a sympathetic protection response — and it has been doing so every time you approach the edge of visibility.</p></div>
+      <p>Your nervous system has detected a threat — the vulnerability of being seen, the risk of rejection, the uncertainty of an outcome it can't control — and it has responded the way it was designed to: by bracing. By mobilising. By keeping you in motion without letting you arrive at the exposed place.</p>
+      <p>The energy is real. The drive is real. The nervous system is doing exactly what it evolved to do. It's just doing it in a context where the threat isn't physical — and where the protection response is keeping you from the very thing you're trying to build.</p>
+    </div>
+
+    <div class="result-section">
+      <p class="section-tag">What It's Costing You</p>
+      <ul class="cost-list">
+        <li>The post that was written and rewritten but never published</li>
+        <li>The offer that's been refined so many times it no longer feels like yours</li>
+        <li>The conversation you've been meaning to have for three months</li>
+        <li>The energy spent doing everything except the exposed thing</li>
+        <li>The version of the business that exists in detail in your head, but not yet in the world</li>
+      </ul>
+    </div>
+
+    <div class="result-section">
+      <p class="section-tag">The Possibility</p>
+      <p>The energy your nervous system brings to this — the drive, the focus, the refusal to stop — is not the problem. That is a resource. The work is learning to direct it rather than be driven by it. To move from reactive mobilisation into ventral vagal presence — grounded, energised, and available to act from clarity rather than threat.</p>
+      <p>This is not a mindset shift. It is a physiological one. And it is trainable — in the body, not in the head.</p>
+    </div>
+
+    <div class="cta-block">
+      <p class="cta-eyebrow">Designed for this pattern</p>
+      <h3 class="cta-title">Capacity to Start<br><em>Half-day workshop</em></h3>
+      <p class="cta-body">In three and a half hours, you will learn to recognise your braced state as it's happening, interrupt it with tools that work in real time, and build the physiological capacity to act from a grounded place — not a braced one.</p>
+      <div class="cta-details">
+        <div class="cta-detail"><span class="cta-detail-val">3.5h</span><span class="cta-detail-label">Half Day</span></div>
+        <div class="cta-detail"><span class="cta-detail-val">12</span><span class="cta-detail-label">Max Participants</span></div>
+        <div class="cta-detail"><span class="cta-detail-val">£47</span><span class="cta-detail-label">Investment</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:14px;">
+        <a class="btn-cta" href="index.html#book">Reserve Your Place</a>
+        <a href="index.html" style="font-family:'DM Sans',sans-serif; font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid rgba(176,168,152,0.3); padding-bottom:2px; transition:color 0.2s;">← Back to the full workshop details</a>
+      </div>
+    </div>
+
+  </div>
+  <div class="retake">Not quite right? <a onclick="restartQuiz()">Retake the quiz</a></div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- RESULT: THE DISAPPEARED FOUNDER -->
+<!-- ══════════════════════════════════════════ -->
+<div id="result-disappeared" class="result-screen disappeared">
+  <div class="result-hero disappeared-hero">
+    <div class="profile-badge"><span class="badge-dot"></span>Your Capacity Pattern</div>
+    <h1 class="result-name">The Disappeared<br>Founder</h1>
+    <p class="result-subtitle">Present in your head. Absent in the world.</p>
+  </div>
+  <div class="result-body">
+
+    <div class="result-section">
+      <p class="section-tag">The Mirror</p>
+      <p class="mirror-text">"The idea is still there. You still believe in it — somewhere underneath the flatness. But you've gone quiet. You stopped posting. You stopped talking about it. You're not sure when exactly it happened."</p>
+    </div>
+
+    <div class="result-section">
+      <p class="section-tag">What's Actually Happening</p>
+      <div class="reframe-box"><p>This is not laziness. It is not a sign you don't want it enough. It is your nervous system running a dorsal vagal shutdown response — the oldest protection pattern in the human body.</p></div>
+      <p>When the nervous system determines that mobilisation isn't working — that the threat is too big, the exposure too sustained, the risk too persistent — it drops below fight and flight into a state of conservation. Stillness. Disconnection. The feeling of low energy and blank mind that you may have been calling 'not being ready' or 'needing more time.'</p>
+      <p>This is not a character flaw. It is an adaptive survival response. Your nervous system read the exposure of starting as a threat it couldn't outrun — and it went quiet instead. The biology is doing exactly what it evolved to do. It just doesn't know you're not in physical danger.</p>
+    </div>
+
+    <div class="result-section">
+      <p class="section-tag">What It's Costing You</p>
+      <ul class="cost-list">
+        <li>The months that have passed while you waited to feel ready</li>
+        <li>The audience that doesn't know you exist yet</li>
+        <li>The conversations and connections that haven't happened</li>
+        <li>The quiet erosion of confidence that comes from standing still</li>
+        <li>The version of yourself that already knows how to do this — and is waiting to be allowed to</li>
+      </ul>
+    </div>
+
+    <div class="result-section">
+      <p class="section-tag">The Possibility</p>
+      <p>The flatness you feel is not the truth of your capacity. It is a state — one that responds to physiological intervention more directly than to any amount of thinking, planning or motivating yourself. You do not need to feel ready before you act. You need to shift the state that's telling you you aren't.</p>
+      <p>Small is the right place to start. A single tool, used once, in one real moment. The nervous system doesn't need a complete overhaul — it needs evidence that it's safe to move.</p>
+    </div>
+
+    <div class="cta-block">
+      <p class="cta-eyebrow">Designed for this pattern</p>
+      <h3 class="cta-title">Capacity to Start<br><em>Half-day workshop</em></h3>
+      <p class="cta-body">This workshop begins exactly where you are — not where you think you should be. You will leave with the physiological explanation for your pattern, a set of tools that work directly on the shutdown state, and the lived experience of what capacity actually feels like in your body.</p>
+      <div class="cta-details">
+        <div class="cta-detail"><span class="cta-detail-val">3.5h</span><span class="cta-detail-label">Half Day</span></div>
+        <div class="cta-detail"><span class="cta-detail-val">12</span><span class="cta-detail-label">Max Participants</span></div>
+        <div class="cta-detail"><span class="cta-detail-val">£47</span><span class="cta-detail-label">Investment</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:14px;">
+        <a class="btn-cta" href="index.html#book">Reserve Your Place</a>
+        <a href="index.html" style="font-family:'DM Sans',sans-serif; font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid rgba(176,168,152,0.3); padding-bottom:2px; transition:color 0.2s;">← Back to the full workshop details</a>
+      </div>
+    </div>
+
+  </div>
+  <div class="retake">Not quite right? <a onclick="restartQuiz()">Retake the quiz</a></div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- RESULT: THE CYCLING FOUNDER -->
+<!-- ══════════════════════════════════════════ -->
+<div id="result-cycling" class="result-screen cycling">
+  <div class="result-hero cycling-hero">
+    <div class="profile-badge"><span class="badge-dot"></span>Your Capacity Pattern</div>
+    <h1 class="result-name">The Cycling<br>Founder</h1>
+    <p class="result-subtitle">Feast and famine. On and then gone.</p>
+  </div>
+  <div class="result-body">
+
+    <div class="result-section">
+      <p class="section-tag">The Mirror</p>
+      <p class="mirror-text">"You know both states. The weeks when everything feels possible and you're posting and pitching and building. And then — without warning — the crash. The flatness. The disappearing. And then wondering if the good weeks were even real."</p>
+    </div>
+
+    <div class="result-section">
+      <p class="section-tag">What's Actually Happening</p>
+      <div class="reframe-box"><p>You're not inconsistent. You're not broken. You have two nervous system protection responses running in sequence — and your system has been cycling between them because neither one is completing the job.</p></div>
+      <p>Fight and flight mobilises you — the burst of activity, the push, the energy. But the exposure it creates is unsustainable, and eventually the system tips into shutdown to recover. The shutdown restores energy — but the flatness is intolerable, so the system mobilises again. The cycle runs itself.</p>
+      <p>This pattern often feels the most confusing from the inside, because you have evidence that you can do it — the good weeks prove it — and yet the crashes keep coming. The problem is not your commitment or your ability. It is the absence of a regulated baseline to return to between the extremes.</p>
+    </div>
+
+    <div class="result-section">
+      <p class="section-tag">What It's Costing You</p>
+      <ul class="cost-list">
+        <li>The momentum that builds and then disappears before it compounds</li>
+        <li>The audience that sees you show up intensely and then vanish</li>
+        <li>The trust — in yourself — that comes from consistent, steady action</li>
+        <li>The energy spent recovering from your own activation</li>
+        <li>The version of the business that could exist if the good weeks were the baseline, not the exception</li>
+      </ul>
+    </div>
+
+    <div class="result-section">
+      <p class="section-tag">The Possibility</p>
+      <p>The goal is not to eliminate the highs — the activation, the drive, the energy. The goal is to build a regulated ventral baseline that the highs can return to, rather than crashing through shutdown to recover. A nervous system that can move between states flexibly — rather than being pulled between extremes — is a nervous system with genuine capacity.</p>
+      <p>This is trainable. The body already knows both states. The work is building the third one: grounded, present, available — and sustainable.</p>
+    </div>
+
+    <div class="cta-block">
+      <p class="cta-eyebrow">Designed for this pattern</p>
+      <h3 class="cta-title">Capacity to Start<br><em>Half-day workshop</em></h3>
+      <p class="cta-body">The Capacity Method teaches the tools for all three states — including the regulated ventral baseline that cycling founders are missing. You will learn to recognise where you are in the cycle in real time, and intervene before the crash rather than after it.</p>
+      <div class="cta-details">
+        <div class="cta-detail"><span class="cta-detail-val">3.5h</span><span class="cta-detail-label">Half Day</span></div>
+        <div class="cta-detail"><span class="cta-detail-val">12</span><span class="cta-detail-label">Max Participants</span></div>
+        <div class="cta-detail"><span class="cta-detail-val">£47</span><span class="cta-detail-label">Investment</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:14px;">
+        <a class="btn-cta" href="index.html#book">Reserve Your Place</a>
+        <a href="index.html" style="font-family:'DM Sans',sans-serif; font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid rgba(176,168,152,0.3); padding-bottom:2px; transition:color 0.2s;">← Back to the full workshop details</a>
+      </div>
+    </div>
+
+  </div>
+  <div class="retake">Not quite right? <a onclick="restartQuiz()">Retake the quiz</a></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// QUIZ DATA
+// Each option scores: B = Braced, D = Disappeared, C = Cycling
+// ══════════════════════════════════════════
+const questions = [
+  {
+    q: "You've been meaning to post something about your business for two weeks. What's actually happening?",
+    sub: "Go with the feeling, not the story you tell about it.",
+    options: [
+      { text: "I keep rewriting it. It's almost there but not quite right yet.", scores: { B: 3, D: 0, C: 1 } },
+      { text: "I've lost momentum on it. I'll get back to it eventually.", scores: { B: 0, D: 3, C: 1 } },
+      { text: "I had a burst of energy about it, then it stalled. Now it feels heavy.", scores: { B: 0, D: 1, C: 3 } },
+      { text: "I posted something but immediately wanted to delete it.", scores: { B: 2, D: 1, C: 1 } },
+    ]
+  },
+  {
+    q: "Someone asks what you're working on. What happens in your body before you answer?",
+    sub: "The body's response — before the words come.",
+    options: [
+      { text: "A kind of bracing. I over-explain to make sure they understand it properly.", scores: { B: 3, D: 0, C: 1 } },
+      { text: "Something deflates. I downplay it or change the subject.", scores: { B: 0, D: 3, C: 1 } },
+      { text: "It depends completely on the day — sometimes I'm all in, sometimes I'm gone.", scores: { B: 0, D: 1, C: 3 } },
+      { text: "My voice goes flat and I hear myself saying it without really meaning it.", scores: { B: 1, D: 2, C: 1 } },
+    ]
+  },
+  {
+    q: "Describe the last time you avoided a business action you knew you needed to take.",
+    sub: null,
+    options: [
+      { text: "I did ten other productive things instead. The list grew, the task didn't happen.", scores: { B: 3, D: 0, C: 1 } },
+      { text: "I genuinely could not make myself do it. The energy wasn't there.", scores: { B: 0, D: 3, C: 1 } },
+      { text: "I'd been meaning to do it for ages, finally got fired up — then crashed before completing it.", scores: { B: 0, D: 1, C: 3 } },
+      { text: "I started it and kept starting it. Never finished.", scores: { B: 2, D: 1, C: 2 } },
+    ]
+  },
+  {
+    q: "How would you describe your relationship with visibility — being seen, posting, putting yourself out there?",
+    sub: null,
+    options: [
+      { text: "Exhausting. I do it but it costs me. I need it to be right before I'll release it.", scores: { B: 3, D: 0, C: 0 } },
+      { text: "I've mostly stopped. The thought of it feels too big.", scores: { B: 0, D: 3, C: 0 } },
+      { text: "Hot and cold. Sometimes I'm really out there. Then I go quiet for weeks.", scores: { B: 0, D: 0, C: 3 } },
+      { text: "Complicated. Some days fine, some days impossible, no pattern I can predict.", scores: { B: 1, D: 1, C: 2 } },
+    ]
+  },
+  {
+    q: "You get a rejection or critical piece of feedback about your business. What happens?",
+    sub: "Be honest — what actually happens, not what you wish happened.",
+    options: [
+      { text: "I go into overdrive. I immediately start fixing, improving, responding.", scores: { B: 3, D: 0, C: 1 } },
+      { text: "I go quiet. I pull back. I might not engage with the business for a few days.", scores: { B: 0, D: 3, C: 1 } },
+      { text: "I react strongly, then crash — and recovery takes longer than it should.", scores: { B: 1, D: 1, C: 3 } },
+      { text: "I freeze — I can't react at all in the moment. It takes time to process.", scores: { B: 0, D: 2, C: 2 } },
+    ]
+  },
+  {
+    q: "How long have you been 'almost' starting — in a meaningful state of preparation without full launch?",
+    sub: "This data helps us understand where you are in the journey.",
+    options: [
+      { text: "Under 6 months — I'm relatively new to this.", scores: { B: 1, D: 1, C: 1 } },
+      { text: "6 to 18 months — long enough to know something is stopping me.", scores: { B: 2, D: 1, C: 2 } },
+      { text: "Over 18 months — this pattern has been running for a while.", scores: { B: 1, D: 2, C: 2 } },
+      { text: "Years. I've lost count.", scores: { B: 1, D: 3, C: 1 } },
+    ]
+  },
+  {
+    q: "What have you already tried to get past what's stopping you?",
+    sub: "Select the closest match.",
+    options: [
+      { text: "Mindset work, journaling, affirmations, positive thinking.", scores: { B: 2, D: 1, C: 1 } },
+      { text: "Business courses, programmes, more information, more preparation.", scores: { B: 3, D: 1, C: 1 } },
+      { text: "Therapy or coaching — working on the underlying stuff.", scores: { B: 1, D: 2, C: 2 } },
+      { text: "Mostly just waiting to feel ready.", scores: { B: 0, D: 3, C: 1 } },
+    ]
+  },
+  {
+    q: "When you imagine taking the action that scares you most in your business, what happens in your body?",
+    sub: "Close your eyes for a moment if it helps. What's there?",
+    options: [
+      { text: "Tightening. Chest, jaw, shoulders. A kind of brace.", scores: { B: 3, D: 0, C: 1 } },
+      { text: "Heaviness. Sinking. A kind of blank.", scores: { B: 0, D: 3, C: 1 } },
+      { text: "A spike of energy — then a crash. The thought of it exhausts me before I've started.", scores: { B: 0, D: 1, C: 3 } },
+      { text: "Nothing clear. A kind of numbness or absence.", scores: { B: 0, D: 2, C: 2 } },
+    ]
+  },
+  {
+    q: "Complete this sentence honestly: 'The thing that's actually stopping me is…'",
+    sub: "Your first answer. Not the polished one.",
+    options: [
+      { text: "…not being ready. I need it to be better first.", scores: { B: 3, D: 0, C: 1 } },
+      { text: "…I don't know. I've lost access to the energy I used to have for it.", scores: { B: 0, D: 3, C: 1 } },
+      { text: "…I keep starting and stopping. I can't maintain the momentum.", scores: { B: 0, D: 1, C: 3 } },
+      { text: "…fear of what happens if it actually works.", scores: { B: 2, D: 1, C: 2 } },
+    ]
+  }
+];
+
+// ── State
+let current = 0;
+let answers = [];
+let scores = { B: 0, D: 0, C: 0 };
+
+// ── Show / hide screens
+function showScreen(id) {
+  document.querySelectorAll('.screen, .result-screen').forEach(s => {
+    s.classList.remove('active');
+    if (s.style) s.style.display = '';
+  });
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add('active');
+    if (el.classList.contains('result-screen')) {
+      el.style.display = 'flex';
+    }
+    window.scrollTo(0, 0);
+  }
+}
+
+// ── Render a question
+function renderQuestion(index) {
+  const body = document.getElementById('quiz-body');
+  const q = questions[index];
+  const letters = ['A','B','C','D'];
+
+  body.innerHTML = `
+    <div class="question-block active">
+      <p class="q-number">Question ${index + 1} of ${questions.length}</p>
+      <h2 class="q-text">${q.q}</h2>
+      ${q.sub ? `<p class="q-sub">${q.sub}</p>` : '<div style="margin-bottom:40px"></div>'}
+      <div class="options">
+        ${q.options.map((opt, i) => `
+          <button class="option" onclick="selectOption(this, ${i})">
+            <span class="option-letter">${letters[i]}</span>${opt.text}
+          </button>
+        `).join('')}
+      </div>
+      <div class="quiz-nav">
+        <button class="btn-back" onclick="goBack()" ${index === 0 ? 'disabled' : ''}>← Back</button>
+        <button class="btn-next" id="btn-next" onclick="goNext()">
+          ${index === questions.length - 1 ? 'See My Pattern →' : 'Next →'}
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Restore answer if navigating back
+  if (answers[index] !== undefined) {
+    const opts = body.querySelectorAll('.option');
+    opts[answers[index]].classList.add('selected');
+    document.getElementById('btn-next').classList.add('enabled');
+  }
+
+  updateProgress(index);
+}
+
+function selectOption(el, i) {
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[current] = i;
+  document.getElementById('btn-next').classList.add('enabled');
+}
+
+function goNext() {
+  if (answers[current] === undefined) return;
+
+  // Accumulate score
+  const q = questions[current];
+  const chosen = q.options[answers[current]];
+  scores.B += chosen.scores.B;
+  scores.D += chosen.scores.D;
+  scores.C += chosen.scores.C;
+
+  current++;
+  if (current >= questions.length) {
+    showScreen('email-gate');
+  } else {
+    renderQuestion(current);
+  }
+}
+
+function goBack() {
+  if (current === 0) return;
+  // Undo last score
+  const prevQ = questions[current - 1];
+  if (answers[current - 1] !== undefined) {
+    const prevChoice = prevQ.options[answers[current - 1]];
+    scores.B -= prevChoice.scores.B;
+    scores.D -= prevChoice.scores.D;
+    scores.C -= prevChoice.scores.C;
+  }
+  current--;
+  renderQuestion(current);
+}
+
+function updateProgress(index) {
+  const pct = ((index) / questions.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `${index + 1} / ${questions.length}`;
+}
+
+function submitEmail() {
+  const name = document.getElementById('first-name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('email').style.borderColor = 'rgba(192,57,43,0.6)';
+    return;
+  }
+  // Determine profile
+  const max = Math.max(scores.B, scores.D, scores.C);
+  let profile = 'cycling';
+  if (scores.B === max && scores.B > scores.D && scores.B > scores.C) profile = 'braced';
+  else if (scores.D === max && scores.D > scores.B && scores.D > scores.C) profile = 'disappeared';
+  else profile = 'cycling';
+
+  showScreen('result-' + profile);
+}
+
+function restartQuiz() {
+  current = 0;
+  answers = [];
+  scores = { B: 0, D: 0, C: 0 };
+  showScreen('quiz');
+  renderQuestion(0);
+}
+</script>
+</body>
+</html>
