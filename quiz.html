@@ -1217,13 +1217,15 @@ function updateProgress(index) {
   document.getElementById('progress-label').textContent = `${index + 1} / ${questions.length}`;
 }
 
-function submitEmail() {
+async function submitEmail() {
   const name = document.getElementById('first-name').value.trim();
   const email = document.getElementById('email').value.trim();
+
   if (!email || !email.includes('@')) {
     document.getElementById('email').style.borderColor = 'rgba(192,57,43,0.6)';
     return;
   }
+
   // Determine profile
   const max = Math.max(scores.B, scores.D, scores.C);
   let profile = 'cycling';
@@ -1231,7 +1233,76 @@ function submitEmail() {
   else if (scores.D === max && scores.D > scores.B && scores.D > scores.C) profile = 'disappeared';
   else profile = 'cycling';
 
+  // Determine duration tag (question index 5, answer index 0-3)
+  const durationMap = ['under-6-months', '6-to-18-months', 'over-18-months', 'over-18-months'];
+  const durationTag = answers[5] !== undefined ? durationMap[answers[5]] : 'unknown-duration';
+
+  // Determine prior attempts tag (question index 6, answer index 0-3)
+  const attemptsMap = ['already-tried-mindset', 'already-tried-courses', 'already-tried-therapy', 'already-tried-waiting'];
+  const attemptsTag = answers[6] !== undefined ? attemptsMap[answers[6]] : 'unknown-attempts';
+
+  // Show result immediately — don't wait for Kit
   showScreen('result-' + profile);
+
+  // Submit to Kit silently in background
+  try {
+    const KIT_FORM_ID = '9124375';
+    const KIT_API_KEY = 'DAX_5s0OJwWT--DZeuW2xQ';
+
+    // Step 1 — Subscribe to form
+    const subResponse = await fetch(
+      `https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          api_key: KIT_API_KEY,
+          email: email,
+          first_name: name || '',
+          tags: []
+        })
+      }
+    );
+
+    const subData = await subResponse.json();
+    const subscriberId = subData.subscription?.subscriber?.id;
+
+    if (!subscriberId) return;
+
+    // Step 2 — Apply all three tags
+    const tagsToApply = [
+      profile + '-founder',
+      durationTag,
+      attemptsTag
+    ];
+
+    // Tag names need to be created first, then applied by name
+    for (const tagName of tagsToApply) {
+      await fetch('https://api.convertkit.com/v3/tags', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          api_key: KIT_API_KEY,
+          tag: { name: tagName }
+        })
+      }).then(r => r.json()).then(async tagData => {
+        const tagId = tagData.id;
+        if (!tagId) return;
+        await fetch(`https://api.convertkit.com/v3/tags/${tagId}/subscribe`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            api_key: KIT_API_KEY,
+            email: email
+          })
+        });
+      });
+    }
+
+  } catch (err) {
+    // Silent fail — user already sees their result, Kit capture is best-effort
+    console.warn('Kit submission error:', err);
+  }
 }
 
 function restartQuiz() {
