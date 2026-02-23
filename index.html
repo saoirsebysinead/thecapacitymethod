@@ -28,6 +28,106 @@
       line-height: 1.7;
     }
 
+    /* ── NAV BAR ── */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,169,110,0.1);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    /* Logo mark — filled gold square */
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-mark span {
+      font-family: 'Georgia', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: #1a1a2e;
+      letter-spacing: -0.5px;
+    }
+
+    /* Wordmark */
+    .logo-wordmark {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .logo-name {
+      font-family: 'Georgia', serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    .logo-divider {
+      width: 100%;
+      height: 0.5px;
+      background: rgba(200,169,110,0.45);
+    }
+
+    .logo-tagline {
+      font-family: 'Arial', sans-serif;
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .nav-cta {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid rgba(200,169,110,0.35);
+      padding: 9px 20px;
+      transition: all 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: rgba(200,169,110,0.08);
+      border-color: var(--accent);
+    }
+
+    @media (max-width: 520px) {
+      .navbar { padding: 14px 20px; }
+      .logo-tagline { display: none; }
+      .logo-divider { display: none; }
+      .nav-cta { display: none; }
+    }
+
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
@@ -37,7 +137,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 80px 24px 60px;
+      padding: 120px 24px 60px;
       position: relative;
       overflow: hidden;
     }
@@ -51,16 +151,6 @@
       height: 80%;
       background: radial-gradient(ellipse, rgba(200,169,110,0.08) 0%, transparent 70%);
       pointer-events: none;
-    }
-
-    .hero-label {
-      font-family: 'Arial', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 28px;
     }
 
     .hero h1 {
@@ -207,13 +297,8 @@
       font-style: italic;
     }
 
-    .story-section {
-      background: var(--deep);
-    }
-
-    .what-happens {
-      background: var(--dark);
-    }
+    .story-section { background: var(--deep); }
+    .what-happens { background: var(--dark); }
 
     .shifts-grid {
       display: grid;
@@ -264,16 +349,14 @@
       text-align: center;
     }
 
-    .quiz-banner .section-label {
-      margin-bottom: 16px;
-    }
+    .quiz-banner .section-label { margin-bottom: 16px; }
 
     .quiz-banner h2 {
       max-width: 600px;
       margin: 0 auto 16px;
     }
 
-    .quiz-banner p {
+    .quiz-banner > .container > p {
       font-size: 1rem;
       color: var(--text-muted);
       font-style: italic;
@@ -281,18 +364,18 @@
       margin: 0 auto 36px;
     }
 
+    /* ── SOFTENED QUIZ META ── */
     .quiz-meta {
-      font-family: 'Arial', sans-serif;
-      font-size: 11px;
-      letter-spacing: 1.5px;
+      font-family: 'Georgia', serif;
+      font-size: 12px;
+      font-style: italic;
       color: var(--text-muted);
-      text-transform: uppercase;
-      margin-top: 14px;
+      opacity: 0.7;
+      margin-top: 20px;
+      letter-spacing: 0.3px;
     }
 
-    .leave-with {
-      background: var(--deep);
-    }
+    .leave-with { background: var(--deep); }
 
     .leave-list {
       list-style: none;
@@ -407,19 +490,30 @@
       text-decoration: none;
     }
 
-    footer a:hover {
-      color: var(--accent);
-    }
+    footer a:hover { color: var(--accent); }
   </style>
 </head>
 <body>
 
 <!-- ══════════════════════════════════════════ -->
+<!-- NAV BAR -->
+<!-- ══════════════════════════════════════════ -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark"><span>CM</span></div>
+    <div class="logo-wordmark">
+      <span class="logo-name">The Capacity Method</span>
+      <div class="logo-divider"></div>
+      <span class="logo-tagline">Nervous System Training</span>
+    </div>
+  </a>
+  <a href="#book" class="nav-cta">Book Your Place</a>
+</nav>
+
+<!-- ══════════════════════════════════════════ -->
 <!-- HERO -->
 <!-- ══════════════════════════════════════════ -->
 <section class="hero">
-  <span class="hero-label">The Capacity Method</span>
-
   <h1>Capacity to Start</h1>
 
   <p class="hero-sub">A half-day workshop for people starting a business</p>
@@ -463,31 +557,30 @@
 
     <p>
       What eventually shifted things wasn't therapy or mindset work. It was my body.
-      Strength training. Martial arts. Breathwork. I was genuinely surprised. 
-      <strong>I went for the physical — to feel stronger...but something much deeper changed.</strong>
-      I no longer felt stuck in a hole I couldn't get out of. I started to move...forward with my life.
-    <p> 
+      Strength training. Martial arts. Breathwork. I was genuinely surprised —
+      <strong>I went for the physical — to feel stronger... but something much deeper changed.</strong>
+      I no longer felt stuck in a hole I couldn't get out of. I started to move... forward with my life.
       But the pattern was clear. Everything that had truly helped me was body-based.
     </p>
 
     <p>
       Inspired by my own experience, I retrained as a personal trainer and breathwork instructor.
-      Started working with clients — using a fusion of modalities. I saw serious shifts. Not just fitness.
+      Started working with clients — using a fusion of modalities. I saw serious shifts — not just fitness.
       Lives changing. Clients of 65 years climbing mountains — literally, not just figuratively.
-      I went deeper into fascia training, breathwork, and nervous system regulation. I wanted to understand the 
-      whole system — not just the symptoms. And what I found changed how I saw everything.
+      I went deeper into fascia training, breathwork, and nervous system regulation. I wanted to
+      understand the whole system — not just the symptoms. And what I found changed how I saw everything.
     </p>
 
     <p>
       Then I started attending business programmes. And I saw the exact same pattern I'd seen in my
-      own breakdown — in aspiring entrepreneurs. People with good ideas, with willing buyers <em>even
-      in the room</em>, and they still couldn't act. Everyone called it confidence or fear.
+      own breakdown — in aspiring entrepreneurs. People with good ideas, with willing buyers
+      <em>even in the room</em>, and they still couldn't act. Everyone called it confidence or fear.
       <strong>I knew it wasn't.</strong>
     </p>
 
     <p>
       That's when I built The Capacity Method. Not as a coaching product. As a missing piece —
-      designed to work alongside business strategy/support or testing a business idea.
+      designed to work alongside business support and strategy.
     </p>
 
     <p style="margin-top: 32px;">
@@ -518,7 +611,7 @@
         <h3>Recognise</h3>
         <p>
           See or feel when your system flips into protection mode — physically and mentally.
-          You can't change what you can't see or feel. This is where awareness starts.
+          You can't change what you can't see. This is where awareness starts.
         </p>
       </div>
 
@@ -574,7 +667,7 @@
           <span class="num">Fullshift</span>
           <h3>Balance</h3>
           <p>
-            When you need both — grounded clarity while staying present. Use this for starting the day regulated-ready, 
+            When you need both — grounded clarity while staying present. Use this for starting your day regulated and response-able, 
             hard conversations, big decisions, or any moment where you need to stay calm and sharp at once.
           </p>
         </div>
@@ -582,29 +675,27 @@
     </div>
 
     <p>
-      You'll experience all three shifts in the workshop — using breathwork, awareness and body-based exercises
+      You'll experience all three shifts in the workshop — using breathwork and body-based exercises
       that are specific to the business actions you're working with. Not generic wellness.
       Practical tools you can use the same day.
     </p>
 
     <p>
       <strong>There's usually a moment in the room where something shifts.</strong> You realise
-      it's simpler than you thought — even if it's not easy or comfortable. You can choose how you want to respond —
+      it's simpler than you thought — even if it's not easy. You can choose how you want to respond —
       rather than just react.
     </p>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════════ -->
-<!-- QUIZ BANNER — mid-page prompt -->
+<!-- QUIZ BANNER -->
 <!-- ══════════════════════════════════════════ -->
 <section class="quiz-banner">
   <div class="container">
     <span class="section-label">Not Sure If This Is For You?</span>
     <h2>Find out what's actually stopping you.</h2>
-    <p>
-      Nine questions. Three minutes. Your personal Capacity Pattern — free.
-    </p>
+    <p>Nine questions. Three minutes. Your personal Capacity Pattern — free.</p>
     <a href="quiz.html" class="btn-primary">Discover Your Capacity Pattern →</a>
     <p class="quiz-meta">The Braced Founder · The Disappeared Founder · The Cycling Founder</p>
   </div>
@@ -718,7 +809,7 @@
   <p>
     Sinead &nbsp;·&nbsp;
     <a href="mailto:sinead.murphy@me.com">sinead.murphy@me.com</a>
-    &nbsp;·&nbsp; TCM Founder © 2026
+    &nbsp;·&nbsp; CM Founder © 2026
   </p>
 </footer>
 
