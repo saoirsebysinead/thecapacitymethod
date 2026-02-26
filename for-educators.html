@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Capacity Method</title>
+  <title>For Business Educators — The Capacity Method</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -36,7 +36,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 80px 24px 60px;
+      padding: 120px 24px 60px;
       position: relative;
       overflow: hidden;
     }
@@ -602,14 +602,115 @@
     .text-center { text-align: center; }
     .mt-8 { margin-top: 8px; }
     .mt-20 { margin-top: 20px; }
+  
+    /* ── NAV BAR ── */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,169,110,0.1);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: #c8a96e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-mark span {
+      font-family: Georgia, serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: #1a1a2e;
+      letter-spacing: -0.5px;
+    }
+    .logo-wordmark {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .logo-name {
+      font-family: Georgia, serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #f0ede8;
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+    .logo-divider-line {
+      width: 100%;
+      height: 0.5px;
+      background: rgba(200,169,110,0.45);
+    }
+    .logo-tagline {
+      font-family: Arial, sans-serif;
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #c8a96e;
+      line-height: 1;
+    }
+    .nav-back {
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #b0a898;
+      text-decoration: none;
+      border: 1px solid rgba(200,169,110,0.25);
+      padding: 9px 20px;
+      transition: all 0.2s;
+    }
+    .nav-back:hover {
+      background: rgba(200,169,110,0.08);
+      border-color: #c8a96e;
+      color: #c8a96e;
+    }
+    @media (max-width: 520px) {
+      .navbar { padding: 14px 20px; }
+      .logo-tagline { display: none; }
+      .logo-divider-line { display: none; }
+      .nav-back { display: none; }
+    }
+
   </style>
 </head>
 <body>
 
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark"><span>CM</span></div>
+    <div class="logo-wordmark">
+      <span class="logo-name">The Capacity Method</span>
+      <div class="logo-divider-line"></div>
+      <span class="logo-tagline">Nervous System Training</span>
+    </div>
+  </a>
+  <a href="index.html" class="nav-back">← Capacity to Start</a>
+</nav>
+
+
 <!-- ═══════════════════════════════════════ HERO ═══ -->
 <section class="hero">
-  <span class="hero-label">The Capacity Method</span>
-
   <h1>
     Your people know what to do.<br>
     <em>Something else is stopping them.</em>
@@ -628,7 +729,7 @@
 
   <div class="hero-cta">
     <a href="#waitlist" class="btn-primary" onclick="document.querySelector('#waitlist').scrollIntoView({behavior:'smooth'}); return false;">Express Interest in the Pilot</a>
-    <span class="btn-note">From £300 per workshop · tailored to your programme</span>
+    <span class="btn-note">From £400 per workshop · tailored to your programme</span>
   </div>
 </section>
 
@@ -639,15 +740,14 @@
     <span class="section-label">The Gap Nobody Talks About</span>
     <h2>You've seen this.</h2>
     <p class="pattern-insight">
-      Someone with a great idea, service or product. 
-      Every reason to act.<br>
+      Someone with a great idea. Real interest in the room. Every reason to act.<br>
       And they still don't.
     </p>
 
     <div class="pattern-body">
       <p>
         They call it lack of confidence. But watch what actually happens: they freeze mid-sentence. They
-        overexplain. They apologise before they've said anything. They leave the room or programme without pitching —
+        overexplain. They apologise before they've said anything. They leave the room without pitching —
         and only later realise someone would have bought.
       </p>
       <p>
@@ -656,49 +756,30 @@
         Visibility. Judgement. Uncertainty. Failure. The body responds before logic gets a chance.
       </p>
       <p>
-        This is the gap between knowing and doing - fear and follow-though. 
-        And most business programmes weren't built to close it.
+        This is the gap between knowing and doing. And most business programmes weren't built to close it.
       </p>
     </div>
   </div>
 </section>
 
 
-<!-- ═══════════════════════════════════════ SINEAD'S STORY ═══ -->
+<!-- ═══════════════════════════════════════ BRIDGE + EARLY FEEDBACK ═══ -->
 <section class="story-section">
   <div class="container-wide">
     <div class="story-grid">
       <div class="story-left">
-        <span class="section-label">Why I Built This</span>
-        <h2>I didn't find this in a textbook.</h2>
+        <span class="section-label">Where This Comes From</span>
+        <h2>Built from the inside out.</h2>
         <p>
-          I spent 15 years in HR systems before I burnt out — properly. Grief, a marriage ending, a mortgage
-          to carry alone - while my career crumbled. Overwhelm hit first. Which I numbed with wine.
-          Then I didn't want to cope. I just wanted it to stop. And came very close to ending it all.
+          Capacity to Start (CTS) is the first workshop in The Capacity Method — currently in its pilot
+          phase with pre-start founders. If you've come from that page, you've already seen what
+          participants experience firsthand - and why I built the method for entrepreneurs.
         </p>
         <p>
-          What eventually shifted things wasn't therapy or mindset work. It was my body.
-          I started with Strength training. Then Martial arts. Then Breathwork. I was genuinely surprised —
-          <strong>I came for the physical, and something much deeper changed.</strong> 
-          I no longer felt like I was stuck in a hole I couldn't get out of. I could move foward with my life.
-        </p>
-        <p>
-          It was then that I realised <strong>the pattern;</strong> all of the modalities that actually helped me were body-based.
-          So I retrained as a personal trainer. Worked with clients, using a fusion of modalities - and started to see serious shifts. Not just fitness.
-          Lives changing. Clients of 65 climbing mountains - literally and figuratively. I went deeper into fascia training, breathwork, vagus nerve regulation and positive intelligence
-          to understand what was actually happening at a whole system level.
-        </p>
-        <p>
-          Then I started attending business programmes. And I saw the exact same pattern I'd seen
-          in my own breakdown — in entrepreneurs. People with good ideas, willing buyers
-          <em>in the room</em>, and they still couldn't act. Everyone called it lack of confidence.
-          
-          <strong>I knew it wasn't.</strong>
-        </p>
-        <p>
-          That's when I built The Capacity Method. Not as a coaching product. As a missing piece —
-          designed to sit alongside what business educators are already doing well.
-        </p>
+          Which is why the Capacity Method is also designed to sit alongside what you're already doing well.
+          Not to replace strategy or planning — but to close the gap between knowing and doing
+          that strategy alone can't close.
+        </p>            
       </div>
 
       <div class="story-right">
@@ -766,7 +847,7 @@
     <h2>Your programme teaches the how.<br>This closes the gap between knowing and doing.</h2>
 
     <p>
-      If you run business courses, workshops, accelerators, or self-employment programmes — you already cover the essentials:
+      If you run workshops, accelerators, or self-employment programmes — you already cover the essentials:
       idea validation, business models, pitching, planning. Your participants leave knowing what they need to do.
     </p>
     <p>
