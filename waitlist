@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Join the Waitlist — Capacity to Start</title>
+  <style>
+    :root {
+      --dark: #1a1a2e;
+      --accent: #c8a96e;
+      --accent-light: #e8c98e;
+      --text: #f0ede8;
+      --text-muted: #b0a898;
+      --white: #ffffff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', serif;
+      color: var(--text);
+      background: linear-gradient(160deg, #0f0f1e 0%, #1a1a2e 50%, #0d1b2a 100%);
+      min-height: 100vh;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 1px solid rgba(200,169,110,0.15);
+    }
+    .nav-logo {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-back {
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .nav-back:hover { color: var(--accent-light); }
+    @media (max-width: 480px) { nav { padding: 16px 20px; } }
+    .page-wrap {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 64px 40px 80px;
+    }
+    @media (max-width: 600px) { .page-wrap { padding: 40px 24px 60px; } }
+    .page-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    h1 em { font-style: italic; color: var(--accent-light); }
+    .page-sub {
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: var(--accent);
+      margin: 0 0 36px 0;
+      opacity: 0.5;
+    }
+    .expect { margin-bottom: 48px; }
+    .expect-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 16px;
+    }
+    .expect ul { list-style: none; padding: 0; }
+    .expect ul li {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      padding: 10px 0 10px 24px;
+      border-bottom: 1px solid rgba(200,169,110,0.1);
+      position: relative;
+    }
+    .expect ul li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-size: 0.8rem; }
+    .expect ul li:last-child { border-bottom: none; }
+    .form-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(200,169,110,0.2);
+      border-radius: 4px;
+      padding: 40px;
+    }
+    @media (max-width: 480px) { .form-card { padding: 28px 20px; } }
+    .form-heading { font-size: 1.15rem; font-weight: 400; color: var(--white); margin-bottom: 6px; }
+    .form-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 28px; line-height: 1.6; }
+    .waitlist-input {
+      width: 100%;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(200,169,110,0.3);
+      border-radius: 3px;
+      color: #f0ede8;
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      outline: none;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .waitlist-input::placeholder { color: rgba(176,168,152,0.6); }
+    .waitlist-input:focus { border-color: rgba(200,169,110,0.6); }
+    .waitlist-btn {
+      width: 100%;
+      padding: 18px 40px;
+      background: var(--accent);
+      color: #1a1a00;
+      font-family: 'Arial', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .waitlist-btn:hover { background: var(--accent-light); }
+    .form-note {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 18px;
+      letter-spacing: 0.04em;
+    }
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid rgba(200,169,110,0.1);
+      margin-top: 80px;
+    }
+    footer .brand {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    footer p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.8; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">The Capacity Method</a>
+  <a href="index.html" class="nav-back">← Capacity to Start</a>
+</nav>
+
+<div class="page-wrap">
+
+  <span class="page-label">Workshop Waitlist</span>
+
+  <h1>
+    Be first to know<br>
+    <em>when doors open.</em>
+  </h1>
+
+  <p class="page-sub">
+    Capacity to Start is coming. The date and location are being confirmed now.
+    Join the waitlist and you'll hear first — with a priority booking window
+    before it opens to the public.
+  </p>
+
+  <div class="divider"></div>
+
+  <div class="expect">
+    <span class="expect-label">What happens when you join</span>
+    <ul>
+      <li>You'll get one email the moment the date is confirmed</li>
+      <li>Priority access to book before the public announcement</li>
+      <li>No sales sequence — just the notification when it's ready</li>
+    </ul>
+  </div>
+
+  <div class="form-card">
+    <p class="form-heading">Reserve your place on the list.</p>
+    <p class="form-sub">Takes 20 seconds. No commitment required.</p>
+
+    <!--
+    KIT EMBED INSTRUCTIONS:
+    1. Kit → Forms → Create New Form → name it "Workshop Waitlist"
+    2. Choose Inline format
+    3. Under Incentive, set to "no incentive / redirect to thank you"
+    4. Copy the embed script Kit gives you
+    5. Delete the placeholder form below
+    6. Paste the Kit script tag in its place inside this div
+    Tag to apply on this form: workshop-waitlist
+    -->
+
+    <div id="kit-embed-container">
+
+      <script async data-uid="ff6d9ed66b" src="https://the-capacity-method.kit.com/ff6d9ed66b/index.js"></script>
+
+    </div>
+
+    <p class="form-note">No spam. No pressure. &nbsp;·&nbsp; Sinead, The Capacity Method</p>
+  </div>
+
+</div>
+
+<footer>
+  <p class="brand">The Capacity Method</p>
+  <p>
+    Sinead &nbsp;·&nbsp;
+    <a href="mailto:sinead.murphy@me.com" style="color: var(--text-muted); text-decoration:none;">sinead.murphy@me.com</a>
+    &nbsp;·&nbsp; CM Founder &nbsp;·&nbsp; © 2026
+  </p>
+  <p style="margin-top: 16px;">
+    <a href="for-educators.html" style="color: var(--text-muted); text-decoration: none; font-size: 11px; letter-spacing: 1px; border-bottom: 1px solid rgba(176,168,152,0.2); padding-bottom: 1px; transition: color 0.2s;">Are you a business educator or programme provider? → The Capacity Method</a>
+  </p>
+</footer>
+</body>
+</html>
