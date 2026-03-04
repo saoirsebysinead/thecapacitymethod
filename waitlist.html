@@ -220,11 +220,52 @@
 
     <div id="kit-embed-container">
 
-      <script async data-uid="ff6d9ed66b" src="https://the-capacity-method.kit.com/ff6d9ed66b/index.js"></script>
+      <form id="waitlist-form" onsubmit="submitWaitlist(event)">
+        <input type="text" id="wl-name" class="waitlist-input" placeholder="Your first name" required />
+        <input type="email" id="wl-email" class="waitlist-input" placeholder="Your email address" required />
+        <button type="submit" class="waitlist-btn" id="wl-btn">Join the Waitlist</button>
+      </form>
+
+      <div id="wl-success" style="display:none; text-align:center; padding: 24px 0;">
+        <p style="color: var(--accent-light); font-size: 1.1rem; margin-bottom: 8px;">You are on the list.</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">You will hear from Sinead the moment the date is confirmed.</p>
+      </div>
+
+      <div id="wl-error" style="display:none; text-align:center; padding: 16px 0;">
+        <p style="color: #e88; font-size: 0.9rem;">Something went not quite right. Please try again or email sinead.murphy@me.com directly.</p>
+      </div>
 
     </div>
 
-    <p class="form-note">No spam. No pressure. &nbsp;·&nbsp; Sinead will inform you when dates are confirmed.</p>
+    <script>
+    async function submitWaitlist(e) {
+      e.preventDefault();
+      var btn = document.getElementById("wl-btn");
+      var name = document.getElementById("wl-name").value;
+      var email = document.getElementById("wl-email").value;
+      btn.textContent = "Adding you...";
+      btn.disabled = true;
+      try {
+        var res = await fetch("https://app.kit.com/forms/ff6d9ed66b/subscriptions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ first_name: name, email_address: email })
+        });
+        if (res.ok || res.status === 200 || res.status === 201) {
+          document.getElementById("waitlist-form").style.display = "none";
+          document.getElementById("wl-success").style.display = "block";
+        } else {
+          throw new Error("bad response");
+        }
+      } catch(err) {
+        btn.textContent = "Join the Waitlist";
+        btn.disabled = false;
+        document.getElementById("wl-error").style.display = "block";
+      }
+    }
+    </script>
+
+    <p class="form-note">No spam. No pressure. &nbsp;·&nbsp; Sinead, The Capacity Method</p>
   </div>
 
 </div>
@@ -233,10 +274,10 @@
   <p class="brand">The Capacity Method</p>
   <p>
     Sinead &nbsp;·&nbsp;
-    <a href="mailto:sinead.murphy@me.com" style="color: var(--text-muted); text-decoration:none;">sinead.murphy@me.com</a>
+    <a href="mailto:sinead.murphy@me.com">sinead.murphy@me.com</a>
     &nbsp;·&nbsp; CM Founder &nbsp;·&nbsp; © 2026
   </p>
+  </footer>
 
-</footer>
 </body>
 </html>
