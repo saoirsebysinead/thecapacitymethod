@@ -28,6 +28,107 @@
       line-height: 1.7;
     }
 
+    /* ── NAV BAR ── */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,169,110,0.1);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    /* Logo mark — filled gold square */
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-mark span {
+      font-family: 'Georgia', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: #1a1a2e;
+      letter-spacing: -0.5px;
+    }
+
+    /* Wordmark */
+    .logo-wordmark {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .logo-name {
+      font-family: 'Georgia', serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    .logo-divider {
+      width: 100%;
+      height: 0.5px;
+      background: rgba(200,169,110,0.45);
+    }
+
+    .logo-tagline {
+      font-family: 'Arial', sans-serif;
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .nav-cta {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid rgba(200,169,110,0.35);
+      padding: 9px 20px;
+      transition: all 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: rgba(200,169,110,0.08);
+      border-color: var(--accent);
+    }
+
+    @media (max-width: 520px) {
+      .navbar { padding: 14px 20px; }
+      .logo-tagline { display: block; font-size: 9px; letter-spacing: 2px; }
+      .logo-divider { display: block; }
+      .nav-cta { display: none; }
+    }
+
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       background: linear-gradient(160deg, #0f0f1e 0%, #1a1a2e 50%, #0d1b2a 100%);
@@ -36,7 +137,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 80px 24px 60px;
+      padding: 120px 24px 60px;
       position: relative;
       overflow: hidden;
     }
@@ -50,16 +151,6 @@
       height: 80%;
       background: radial-gradient(ellipse, rgba(200,169,110,0.08) 0%, transparent 70%);
       pointer-events: none;
-    }
-
-    .hero-label {
-      font-family: 'Arial', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 28px;
     }
 
     .hero h1 {
@@ -97,20 +188,41 @@
       max-width: 640px;
       color: var(--text);
       line-height: 1.8;
-      margin-top: 24px;
     }
 
     .hero-details strong {
       color: var(--accent-light);
       font-weight: 400;
+      font-style: italic;
     }
 
+    .hero-reframe {
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      color: var(--text-muted);
+      line-height: 1.8;
+      max-width: 620px;
+      margin: 0 auto 32px;
+    }
+
+    .informed-note {
+      padding: 40px 20px;
+      border-top: 1px solid rgba(200,169,110,0.1);
+    }
+
+    .hero-quiz-prompt {
+      margin-top: 12px;
+      font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ── CTA BLOCK ── */
     .hero-cta {
       margin-top: 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
     }
 
     .btn-primary {
@@ -134,6 +246,22 @@
       transform: translateY(-1px);
     }
 
+    .btn-secondary-link {
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(176,168,152,0.3);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-secondary-link:hover {
+      color: var(--accent-light);
+      border-color: var(--accent-light);
+    }
+
     .btn-note {
       font-family: 'Arial', sans-serif;
       font-size: 12px;
@@ -141,6 +269,7 @@
       letter-spacing: 0.5px;
     }
 
+    /* ── SECTIONS ── */
     section {
       padding: 90px 24px;
     }
@@ -181,13 +310,8 @@
       font-style: italic;
     }
 
-    .story-section {
-      background: var(--deep);
-    }
-
-    .what-happens {
-      background: var(--dark);
-    }
+    .story-section { background: var(--deep); }
+    .what-happens { background: var(--dark); }
 
     .shifts-grid {
       display: grid;
@@ -229,9 +353,42 @@
       margin: 0;
     }
 
-    .leave-with {
-      background: var(--deep);
+    /* ── QUIZ BANNER ── */
+    .quiz-banner {
+      background: linear-gradient(135deg, #1a1a2e 0%, #0f1628 100%);
+      border-top: 1px solid rgba(200,169,110,0.15);
+      border-bottom: 1px solid rgba(200,169,110,0.15);
+      padding: 72px 24px;
+      text-align: center;
     }
+
+    .quiz-banner .section-label { margin-bottom: 16px; }
+
+    .quiz-banner h2 {
+      max-width: 600px;
+      margin: 0 auto 16px;
+    }
+
+    .quiz-banner > .container > p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-style: italic;
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+
+    /* ── SOFTENED QUIZ META ── */
+    .quiz-meta {
+      font-family: 'Georgia', serif;
+      font-size: 12px;
+      font-style: italic;
+      color: var(--text-muted);
+      opacity: 0.7;
+      margin-top: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    .leave-with { background: var(--deep); }
 
     .leave-list {
       list-style: none;
@@ -346,20 +503,31 @@
       text-decoration: none;
     }
 
-    footer a:hover {
-      color: var(--accent);
-    }
+    footer a:hover { color: var(--accent); }
   </style>
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero">
-  <span class="hero-label">The Capacity Method</span>
+<!-- ══════════════════════════════════════════ -->
+<!-- NAV BAR -->
+<!-- ══════════════════════════════════════════ -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark"><span>CM</span></div>
+    <div class="logo-wordmark">
+      <span class="logo-name">The Capacity Method</span>
+      <div class="logo-divider"></div>
+      <span class="logo-tagline">Nervous System Training</span>
+    </div>
+  </a>
+  <a href="quiz.html" class="nav-cta">Discover Your Pattern</a>
+</nav>
 
-  <h1>
-    Capacity to Start
-  </h1>
+<!-- ══════════════════════════════════════════ -->
+<!-- HERO -->
+<!-- ══════════════════════════════════════════ -->
+<section class="hero">
+  <h1>Capacity to Start</h1>
 
   <p class="hero-sub">A half-day workshop for people starting a business</p>
 
@@ -371,68 +539,85 @@
     <strong>It isn't fear. It isn't ability. It's capacity.</strong>
   </p>
 
+  <p class="hero-reframe">
+    The nervous system isn't broken. It's doing exactly what it was built to do. It has assessed the situation — the visibility, the uncertainty, the risk of failure — and responded accordingly. The body moves first. The mind follows. And until the system feels safe enough to act, no amount of strategy will shift it.
+  </p>
+
+  <p class="hero-quiz-prompt">Find out what your pattern is. Three minutes.</p>
+
   <div class="hero-cta">
-    <a href="#book" class="btn-primary">Book Your Place</a>
-    <span class="btn-note">£47 · Half a day · Max 12 people · First workshop March 2026</span>
+    <a href="quiz.html" class="btn-primary">Discover Your Capacity Pattern →</a>
+    <span class="btn-note">Nine questions · Three minutes · Free</span>
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════ -->
 <!-- STORY -->
+<!-- ══════════════════════════════════════════ -->
 <section class="story-section">
   <div class="container">
     <span class="section-label">Why This Works</span>
     <h2>I didn't find this in a textbook.</h2>
 
     <p>
-      I spent 15 years in HR systems before I burnt out — properly. My Nan died. My Mum died. My marriage collapsed inbetween.
-      All in the space of just over a year. I was left with a mortgage to pay on my own - while my career crumbled. 
-      I didn't want to cope. I just wanted it to stop. And I came very close to ending it all.
+      I spent 15 years in HR systems before I burnt out — properly. My Nan died. My Mum died.
+      My marriage collapsed inbetween. All in the space of just over a year. I was left with a
+      mortgage to pay on my own — while my whole career suddenly felt like it belonged to someone else. 
+      And it was only a matter of time before everyone else noticed. I spiralled. I didn't want to cope. I just wanted
+      it to stop. And I came very close to ending it all.
     </p>
 
     <p>
-      <strong>My coping mechanism? Wine. Lots of it.</strong> I'm not proud of it, but I'm not 
-      ashamed either. It's what I had at the time. No judgement from me — as I've been there.
+      <strong>My coping mechanism? Wine. Lots of it.</strong> While I'm not proud of it...I'm not
+      ashamed either. It's what I had at the time. So if you've been there (or are there) — you will
+      find no judgement from me. <strong>As I get it.</strong>
     </p>
 
     <p>
-      What eventually shifted things wasn't therapy or mindset work. It was my body. 
-      Strength training. Martial arts. Breathwork. I was genuinely surprised — 
-      <strong>I went for the physical - to feel stronger...but something much deeper changed.</strong>
-      I no longer felt stuck in a hole I couldn't get out of. I started to move...forward with my life.
-      But the pattern was clear. Everything that had truly helped me was body-based. 
+      What eventually shifted things wasn't therapy or mindset work. It was my body.
+      Strength training. Martial arts. Breathwork. I was genuinely surprised.
+      <strong>I went for the physical — to feel stronger... but something much deeper changed.</strong>
+      I no longer felt stuck in a hole I couldn't get out of. I started to move... forward with my life.
+      But the pattern was clear. Everything that had truly helped me was body-based.
     </p>
 
     <p>
-      Inspirsed by my own experinced, I retrained as a personal trainer and breathwork instructor. Started working with clients - using a fusion of modalities. 
-      I saw serious shifts — not just fitness. Lives changing. Clients of 65yrs climbing mountains - literally, not just figuratively. 
-      I went deeper into fascia training, nutrition/minerals, nervous system regulation and positive intelligence (i.e inner saboteurs) to understand what 
-      was actually happening at a whole bodymind system level.
+      Inspired by my own experience, I retrained as a personal trainer and breathwork instructor.
+      Started working with clients — using a fusion of modalities and I saw serious shifts. Not just fitness.
+      Lives changing. Clients of 65 years climbing mountains — literally, not just figuratively.
+      I went deeper into fascia training, breathwork, and nervous system regulation. I wanted to
+      understand the whole system — not just the symptoms. And what I found changed how I saw everything.
     </p>
 
     <p>
-      Then I started attending business programmes. And I saw the exact same pattern I'd seen in my 
-      own breakdown — in aspiring entrepreneurs. People with good ideas, with willing buyers <em>even in the room</em>, 
-      and they still couldn't act. Everyone assumed lack of confidence or fear. <strong>I knew it wasn't.</strong>
+      Then I started attending business programmes. And I saw the exact same pattern I'd seen in my
+      own breakdown — in aspiring entrepreneurs. People with good ideas, with willing buyers even
+      <em>in the room</em>, and they still couldn't act. Everyone called it confidence or fear.
+      <strong>I knew it wasn't.</strong>
     </p>
 
     <p>
-      That's when I built The Capacity Method. Not as a coaching product. As a missing piece — 
-      designed to work alongside business support and strategy.
+      That's when I built The Capacity Method. Not as a coaching product. As a missing piece —
+      designed to work alongside business support and self employment strategy.
+    </p>
 
-      Now you know my story, it's probably worth knowing my name. I'm Sinead. Welcome. 
+    <p style="margin-top: 32px;">
+      My name's Sinead, and if any of this resonates, you're in the right place.
     </p>
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════ -->
 <!-- WHAT HAPPENS -->
+<!-- ══════════════════════════════════════════ -->
 <section class="what-happens">
   <div class="container">
     <span class="section-label">What Actually Happens</span>
     <h2>This isn't a talk. It's an experience.</h2>
 
     <p>
-      Capacity to Start is a half-day workshop where you actually <em>feel</em> the difference 
-      between being stuck in protection mode and operating from capacity. No theory. 
+      Capacity to Start is a half-day workshop where you actually <em>feel</em> the difference
+      between being stuck in protection mode and operating from capacity. No theory.
       No sitting still for three hours.
     </p>
 
@@ -440,68 +625,137 @@
 
     <div class="shifts-grid">
       <div class="shift-card">
-        <span class="num">Shift 01</span>
+        <span class="num">Step 01</span>
         <h3>Recognise</h3>
         <p>
-          Spot when your system flips into protection mode — physically and mentally. 
-          You can't change what you can't see or feel. This is where awareness starts.
+          See or feel when your system flips into protection mode — physically and mentally.
+          You can't change what you can't see. This is where awareness starts.
         </p>
       </div>
 
       <div class="shift-card">
-        <span class="num">Shift 02</span>
+        <span class="num">Step 02</span>
         <h3>Identify</h3>
         <p>
-          Name your sabotage patterns. Most people have two archetypes that show up under pressure. 
-          We'll find yours — not so you can fix yourself, but so you can work with them.
+          Name your protection pattern — your own words, not someone else's framework.
+          Not so you can fix yourself, but so you can work with what's actually there.
         </p>
       </div>
 
       <div class="shift-card">
-        <span class="num">Shift 03</span>
+        <span class="num">Step 03</span>
         <h3>Choose</h3>
         <p>
-          Learn to interrupt the pattern in real time. Not by forcing yourself, but by understanding 
-          the signal. This is where capacity replaces willpower.
+          Learn to interrupt the pattern in real time — and apply the right shift for the moment
+          that matters. Posting your work. Making an offer. Having a hard conversation.
+          This is where capacity replaces willpower.
         </p>
       </div>
     </div>
 
+    <div style="margin: 64px 0; text-align: center;">
+      <span class="section-label">The Tools</span>
+      <h2 style="font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 16px;">How Your Nervous System Shifts</h2>
+      <p style="max-width: 680px; margin: 0 auto 48px; color: var(--text-muted); font-style: italic;">
+        Find your balance in a world that never slows down. These aren't generic relaxation techniques —
+        they're practical tools specific to the actions required to start a business or test a business
+        idea — before building.
+      </p>
+
+      <div class="shifts-grid">
+        <div class="shift-card">
+          <span class="num">Upshift</span>
+          <h3>Activate</h3>
+          <p>
+            When you need energy, focus, and readiness. Use this before pitching, posting, networking or speaking — any moment that requires you to be seen or heard.
+          </p>
+        </div>
+
+        <div class="shift-card">
+          <span class="num">Downshift</span>
+          <h3>Restore</h3>
+          <p>
+            When you need to come down from activation. Use this for winding down at the end of the day, after high-pressure moments, decision fatigue, or when you're spiralling and need to reset.
+          </p>
+        </div>
+
+        <div class="shift-card">
+          <span class="num">Fullshift</span>
+          <h3>Balance</h3>
+          <p>
+            When you need both — grounded clarity while staying present. Use this for starting your day regulated and response-able, hard conversations, big decisions, or any moment where you need to stay calm and sharp at once.
+          </p>
+        </div>
+      </div>
+    </div>
+
     <p>
-      We use breathwork and body-based exercises — not generic ones, but specific to the actions 
-      required to start a business or test a business idea - before building (KEY!). Starting a conversation. 
-      Networking. Making an offer - including owing the price. Showing your work. Or whatever your block is.
+      You'll experience all three shifts in the workshop — using breathwork and body-based exercises
+      that are specific to the business actions you're working with. Not generic wellness.
+      Practical tools you can use the same day.
     </p>
 
     <p>
-      <strong>There's usually a moment in the room where something shifts.</strong> You realise it's simpler than you thought
-      - even if it's not easy. And you can choose how you want to respond — rather than react.
+      <strong>There's usually a moment in the room where something shifts.</strong> You realise
+      it's simpler than you thought — even if it's not easy. You can choose how you want to respond —
+      rather than just react.
     </p>
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════ -->
+<!-- QUIZ BANNER -->
+<!-- ══════════════════════════════════════════ -->
+<section class="quiz-banner">
+  <div class="container">
+    <span class="section-label">Before The Workshop</span>
+    <h2>Find your Capacity Pattern.</h2>
+    <p>The Braced Founder. The Disappeared Founder. The Cycling Founder.<br>Nine questions. Three minutes. Your pattern — free.</p>
+    <a href="quiz.html" class="btn-primary">Discover Your Capacity Pattern →</a>
+    <p class="quiz-meta">Start here — whatever brought you to this page.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
 <!-- LEAVE WITH -->
+<!-- ══════════════════════════════════════════ -->
 <section class="leave-with">
   <div class="container">
     <span class="section-label">You Leave With</span>
     <h2>Something you can actually use.</h2>
 
     <ul class="leave-list">
-      <li>Your specific sabotage patterns — named and recognised</li>
+      <li>Your specific protection pattern — named in your own words</li>
       <li>A personal practice that works for <em>you</em>, not generic advice</li>
-      <li>The ability to spot protection mode activating before it derails you</li>
+      <li>The ability to spot protection mode activating — before it derails you</li>
       <li>A way to interrupt the pattern in the moment — not hours later</li>
-      <li>The realisation that capacity is trainable and doable.</li>
+      <li>The realisation that capacity is trainable and doable</li>
     </ul>
 
     <p style="margin-top: 32px;">
-      This isn't motivation. It's not mindset. It's nervous and saboteur system training — 
-      <strong>and it works when it matters most, not just when you feel ready.</strong>
+      This isn't motivation. It's not mindset. It's nervous system training —
+      <strong>and it works when it matters, not just when you feel ready.</strong>
     </p>
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════ -->
+<!-- TRAUMA INFORMED NOTE -->
+<!-- ══════════════════════════════════════════ -->
+<section class="informed-note">
+  <div class="container" style="max-width: 680px; text-align: center;">
+    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; font-style: italic;">
+      This workshop is built on the understanding that the nervous system carries history.
+      The tools work within the context of business action — starting, testing, showing up.
+      They are not a substitute for support where real stress, real threat, or trauma history
+      is present. If that's part of your picture, that matters and deserves its own attention.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
 <!-- DETAILS -->
+<!-- ══════════════════════════════════════════ -->
 <section class="details-section">
   <div class="container">
     <span class="section-label">Workshop Details</span>
@@ -511,7 +765,7 @@
       <div class="detail-card">
         <span class="label">Duration</span>
         <div class="value">Half day</div>
-        <div class="note">Morning or afternoon session</div>
+        <div class="note">Morning or afternoon workshop</div>
       </div>
 
       <div class="detail-card">
@@ -547,44 +801,44 @@
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════ -->
 <!-- BOOK -->
+<!-- ══════════════════════════════════════════ -->
 <section class="book-section" id="book">
   <div class="container">
-    <span class="section-label">Book Your Place</span>
-    <h2>One thing to do right now.</h2>
+    <span class="section-label">Workshop Waitlist</span>
+    <h2>Taken the quiz? This is your next step.</h2>
     <p class="sub">
-      Places are limited to 12 people per workshop. Book now to secure your spot 
-      in the first cohort. Promo codes available on request.
+      The date and location are being confirmed now. Join the waitlist and you’ll hear first — with a priority booking window before it opens to the public.
     </p>
 
-     <p style="margin-top: 24px; font-size: 1rem; color: var(--text-muted); font-style: italic;">
-      Not sure if this is right for you? Email 
-      <a href="mailto:sinead.murphy@me.com" style="color: var(--accent); text-decoration: none;">sinead.murphy@me.com</a> 
-      and let's talk.
+    <p style="margin-top: 24px; font-size: 1rem; color: var(--text-muted); font-style: italic;">
+      Haven’t taken the quiz yet? <a href="quiz.html" style="color: var(--accent); text-decoration: none;">Discover your Capacity Pattern first →</a>
     </p>
 
     <div class="hero-cta">
-      <a href="https://www.eventbrite.com/e/YOUR-EVENT-ID" class="btn-primary">Book Now — £47</a>
+      <a href="waitlist.html" class="btn-primary">Join the Waitlist</a>
       <span class="btn-note">
-        Booking via Eventbrite · Full refund if you change your mind before the workshop
+        No commitment · priority access when the date is confirmed
       </span>
     </div>
 
-    <p style="margin-top: 48px; font-size: 0.95rem; color: var(--text-muted); font-style: italic;">
-      Got a promo code? You can apply it during checkout on Eventbrite.
-    </p>
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════ -->
 <!-- FOOTER -->
+<!-- ══════════════════════════════════════════ -->
 <footer>
   <p class="brand">The Capacity Method</p>
   <p>
-    Sinead &nbsp;·&nbsp; 
-    <a href="mailto:sinead.murphy@me.com">sinead.murphy@me.com</a> &nbsp;·&nbsp; 
-    <a href="/">Founder</a>
+    Sinead &nbsp;·&nbsp;
+    <a href="mailto:sinead.murphy@me.com">sinead.murphy@me.com</a>
+    &nbsp;·&nbsp; CM Founder &nbsp;·&nbsp; © 2026
+  </p>
+  <p style="margin-top: 16px;">
+    <a href="for-educators.html" style="color: var(--text-muted); text-decoration: none; font-size: 11px; letter-spacing: 1px; border-bottom: 1px solid rgba(176,168,152,0.2); padding-bottom: 1px; transition: color 0.2s;">Are you a business educator or programme provider? → The Capacity Method</a>
   </p>
 </footer>
-
 </body>
 </html>
