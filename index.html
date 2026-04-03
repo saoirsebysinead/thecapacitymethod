@@ -84,9 +84,20 @@ img{max-width:100%;height:auto;display:block}
 .how-list{list-style:none;margin-top:1.5rem}
 .how-list li{padding:0.9rem 0 0.9rem 1.5rem;border-bottom:1px solid var(--border);font-size:0.95rem;color:var(--text-light);position:relative}
 .how-list li:first-child{border-top:1px solid var(--border)}
-.how-list li::before{content:'';position:absolute;left:0;top:1.2rem;width:8px;height:8px;background:var(--teal);border-radius:50%}
+.how-list li::before{content:'';position:absolute;left:0;top:1.35rem;width:8px;height:8px;background:var(--teal);border-radius:50%}
 .how-note{margin-top:2rem;padding:1.25rem 1.5rem;background:var(--teal-light);border-left:3px solid var(--teal);color:var(--teal-dark);font-size:0.95rem}
 .how-note em{font-style:italic}
+.intro-strip{background:var(--warm-white);border-bottom:1px solid var(--border);padding:clamp(2rem,4vw,3rem) clamp(1.5rem,5vw,4rem)}
+.intro-strip-inner{max-width:var(--max-w);margin:0 auto}
+.intro-line{font-family:var(--font-d);font-size:clamp(1.3rem,2.2vw,1.6rem);font-weight:400;color:var(--teal-dark);line-height:1.45;max-width:780px}
+.how-workshop{margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border)}
+.how-workshop p{color:var(--text-light);margin-bottom:1rem}
+.how-workshop-open{font-family:var(--font-d);font-size:1.15rem;font-weight:500;color:var(--teal-dark);line-height:1.45;margin-bottom:1.5rem}
+.how-delivers{margin:1.5rem 0;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.how-deliver{padding:1rem 1.25rem;background:var(--bg);border:1px solid var(--border);border-left:3px solid var(--teal);font-size:0.92rem;color:var(--text-light);line-height:1.55}
+.how-not{margin-top:2rem}
+.how-not p{color:var(--text-light);font-size:0.95rem;margin-bottom:0.75rem;padding-left:1.25rem;position:relative}
+.how-not p::before{content:'\2715';position:absolute;left:0;color:var(--amber);font-weight:600;font-size:0.85rem}
 .proof{background:var(--bg);position:relative}
 .proof::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--amber),var(--teal))}
 .proof-outcomes{margin-top:2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
@@ -136,7 +147,7 @@ img{max-width:100%;height:auto;display:block}
 .footer a{color:var(--amber);text-decoration:none}
 .fade-up{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
 .fade-up.vis{opacity:1;transform:translateY(0)}
-@media(max-width:1024px){.how-layout,.about-grid{grid-template-columns:1fr}.about-grid{grid-template-columns:180px 1fr}.data-grid,.fit-boxes,.beyond-outcomes{grid-template-columns:1fr}.reality-grid{grid-template-columns:1fr}.proof-outcomes{grid-template-columns:1fr}}
+@media(max-width:1024px){.how-layout,.about-grid{grid-template-columns:1fr}.about-grid{grid-template-columns:180px 1fr}.data-grid,.fit-boxes,.beyond-outcomes,.how-delivers{grid-template-columns:1fr}.reality-grid{grid-template-columns:1fr}.proof-outcomes{grid-template-columns:1fr}}
 @media(max-width:640px){body{font-size:16px}.banner-info{display:none}.about-grid{grid-template-columns:1fr}.about-portrait{max-width:180px;margin:0 auto}.footer{flex-direction:column;gap:0.5rem;text-align:center}.cta-features{flex-direction:column;align-items:center;gap:0.75rem}.quote-strip-inner{flex-direction:column;gap:0}.quote-strip-inner::before{font-size:3.5rem}}
 </style>
 </head>
@@ -157,16 +168,22 @@ img{max-width:100%;height:auto;display:block}
     <div class="hero-overlay"></div>
     <div class="hero-inner">
         <div class="hero-tag">For Business Education</div>
-        <div class="hero-context">Students are entering a business world that’s changing fast.</div> 
-        <h1 class="hero-title">Are you building their capacity to perform<em>—under real-world pressure?</em></h1>
+        <div class="hero-context">Students are entering a business world that's changing fast.</div>
+        <h1 class="hero-title">Are you building their capacity to perform <em>— under real-world pressure?</em></h1>
         <p style="font-size:1.05rem;color:rgba(255,255,255,0.65);margin-bottom:1.5rem;">Find out where your programme stands.</p>
         <a href="scorecard.html" class="hero-cta">
-        Start the Programme Insight Scorecard
-       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
+            Start the Programme Insight Scorecard
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
     </div>
     <div class="hero-credit">Business management workshop delivery</div>
 </section>
+
+<div class="intro-strip">
+    <div class="intro-strip-inner">
+        <p class="intro-line">The Capacity Method works within your existing modules — so your students don't just learn how to lead, they can do it when it counts, not just on a good day.</p>
+    </div>
+</div>
 
 <section class="sec missing">
     <div class="sec-inner fade-up">
@@ -174,12 +191,12 @@ img{max-width:100%;height:auto;display:block}
             <div class="sec-tag">The missing layer</div>
             <h2 class="sec-h">Business is evolving. <em>But not at the level that matters most.</em></h2>
             <p>The business world has changed more in the last five years than in the previous twenty — and UK business leaders confirm their roles have become significantly more complex as a consequence.</p>
-            <p>The response so far has been to add: more content, more tools, more training, more technology. But the people being asked to absorb and adapt are already stretched. Not because they lack knowledge necessarily, but because their capacity to operate under that level of demand has a limit.</p>
-            <div class="ns-reveal">Your students are entering this world.</div>
+            <p>The response so far has been to add — more content, more tools, more training, more technology. But the people being asked to absorb and adapt are already stretched. Not because they lack knowledge necessarily, but because their capacity to operate under that level of demand has a limit.</p>
+            <div class="ns-reveal">Students are entering this world.</div>
             <p>They are learning frameworks, models and theory. But no one is preparing them for the physiological demand of applying it — in environments that are faster, more pressured, and less predictable than anything they have trained for.</p>
             <div class="ns-reveal">The issue is not what they are learning.</div>
-            <p>Under high-pressure and challenging moments, the nervous system can shift into protection mode. Where cognition narrows, decision-making stalls, doubt in competence rises - and the ability to communicate, connect, and perform in real time reduces. Not because something is wrong — but because the system is doing exactly what it was built to do when demand exceeds capacity.</p>
-            <p>The ability to move from protection to presence — to access what you have learned, under real-world pressure, in the moment that matters — requires capacity. The ability to; process, perform, lead, adapt to challenges (especially in a rapidly changing landscape) - and recover effectively. And it is trainable.</p>
+            <p>Under high-pressure and challenging moments, the nervous system can shift into protection mode. Where cognition narrows, decision-making stalls, doubt in competence rises — and the ability to communicate, connect, and perform in real time reduces. Not because something is wrong — but because the system is doing exactly what it was built to do when demand exceeds capacity.</p>
+            <p>The ability to move from protection to presence — to access what you have learned, under real-world pressure, in the moment that matters — requires capacity: the ability to process, perform, lead, adapt to challenges, and recover effectively. And it is trainable.</p>
             <div class="capacity-line">This is not a knowledge gap. It is a <strong>capacity gap.</strong></div>
         </div>
     </div>
@@ -218,7 +235,7 @@ img{max-width:100%;height:auto;display:block}
                 </ul>
             </div>
         </div>
-        <p class="reality-context">If this is happening in the relative safety of the classroom, consider the environments your graduates are walking into. More complex. Faster-moving. Less predictable. They will not just be asked to apply what they know — they will be asked to do it under conditions that keep changing around them. An environment that is already stretching experienced leaders.</p>
+        <p class="reality-context">If this is happening in the relative safety of the classroom, consider the environments your graduates are walking into. More complex. Faster-moving. Less predictable. They will not just be asked to apply what they know — they will be asked to do it under conditions that keep changing around them. Conditions that are already stretching experienced leaders.</p>
         <div class="reality-punchline">The gap is not knowledge. It is <strong>real-world application under demand.</strong></div>
     </div>
 </section>
@@ -274,6 +291,21 @@ img{max-width:100%;height:auto;display:block}
                     <li>Immediate application to real-world scenarios — group work, presentations, difficult conversations, placement preparation</li>
                 </ul>
                 <div class="how-note">Half-day or full-day. In-person. Structured, practical, and designed for real-world transfer — same learning outcomes, with the layer that makes them land.</div>
+                <div class="how-workshop">
+                    <p class="how-workshop-open">This is not a session about real-world pressure. It is a session that creates it — in a controlled way, in the room — so students experience the gap between what they know and what they can access, live. And then they learn what is happening and what to do about it.</p>
+                    <p>This is not a guest lecture. It is a structured, facilitated method — tailored to your module, your cohort, and your learning outcomes.</p>
+                    <div class="how-delivers">
+                        <div class="how-deliver">Pre-session briefing with you to tailor the session to your cohort and module context</div>
+                        <div class="how-deliver">A facilitated session designed around your existing learning outcomes — not bolted on, woven in</div>
+                        <div class="how-deliver">Live, experiential exercises that surface the capacity gap using scenarios your students will actually face</div>
+                        <div class="how-deliver">Post-session report with observations, student responses, and recommendations for embedding capacity into your programme</div>
+                    </div>
+                    <div class="how-not">
+                        <p>Not a wellbeing session — this is about performance, not pastoral care</p>
+                        <p>Not a motivational talk — this is facilitated, not presented at</p>
+                        <p>Not a bolt-on enrichment day — it is designed to integrate with what you are already teaching</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -317,9 +349,9 @@ img{max-width:100%;height:auto;display:block}
                 <p>And it shows up everywhere — not just in burnout, but in learning environments. Students understand the material. They can explain it. But in real — especially challenging — situations, that access is not always there.</p>
                 <p>That is the gap The Capacity Method is designed to close.</p>
                 <div class="creds">
-                    <span class="cred">Certified Personal Trainer & Well-being Coach</span>
+                    <span class="cred">Certified Personal Trainer</span>
                     <span class="cred">SOMA Breathwork — Instructor</span>
-                    <span class="cred">Muay Thai &amp; Boxfit (fitness)— Qualified</span>
+                    <span class="cred">Muay Thai &amp; Boxing — Qualified</span>
                     <span class="cred">Polyvagal Play &amp; Performance — Certified</span>
                     <span class="cred">Positive Intelligence — Coach Training</span>
                     <span class="cred">15+ Years Corporate HR &amp; L&amp;D</span>
@@ -357,10 +389,10 @@ img{max-width:100%;height:auto;display:block}
             <div class="beyond-outcome">More engaged, more present cohorts</div>
             <div class="beyond-outcome">A programme that stands out — because it develops something others do not</div>
         </div>
+        <p>Over time, this does not just change student outcomes. It changes how your programme is experienced — and how it is recognised.</p>
         <p>In many cases, this work naturally extends into staff development for tutors and educators, and leadership development within the institution itself. The conversation starts wherever makes sense for you.</p>
         <div class="beyond-seed">
-            <p class="seed-line">The institutions that will lead in the next decade will not just teach business — they will build their students’ capacity to think clearly, act decisively and communicate effectively when it matters most.
-This is where that starts.</p>
+            <p class="seed-line">The institutions that will lead in the next decade will not just teach business — they will build their students' capacity to think clearly, act decisively and communicate effectively when it matters most. This is where that starts.</p>
         </div>
     </div>
 </section>
